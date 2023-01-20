@@ -1,6 +1,7 @@
 import React from 'react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Form } from './components';
+import './app.css'
 
 const queryClient = new QueryClient({
      defaultOptions: {
@@ -15,7 +16,6 @@ const queryClient = new QueryClient({
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-     <h1>Hello!</h1>
      <Form />
     </QueryClientProvider>
   )
