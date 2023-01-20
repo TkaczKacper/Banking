@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { currentPage } from "../components/form/Form";
 import Modal from "../components/Modal/Modal";
 import { useQuery } from "@tanstack/react-query";
 import fetchSearch from "../components/APIResponse/fetchSearch";
@@ -9,7 +8,8 @@ import './results.css';
 
 
 let modalDataId = 0;
-let totalPages = 1;
+let totalPages: number;
+let currentPage: number;
 
 const Results = () => {
   const url = window.location.href;
@@ -19,6 +19,7 @@ const Results = () => {
   let idNumber = '';
   if (pair[0] === 'page') {
     pageNumber = pair[1];
+    currentPage = Number(pageNumber);
   } else if (pair[0] === 'id') {
     idNumber = pair[1];
   }
@@ -110,7 +111,7 @@ const Results = () => {
           }
         </tbody>
       </table>
-      <Pagination total_pages={totalPages} />
+      <Pagination />
       {showModal ? (
         <Modal>
           <div id="modal_container">
@@ -127,4 +128,4 @@ const Results = () => {
   );
 };
 
-export { Results };
+export { Results, totalPages };

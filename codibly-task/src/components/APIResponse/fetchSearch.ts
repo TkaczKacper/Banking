@@ -17,8 +17,9 @@ const fetchSearch: QueryFunction<
     `https://reqres.in/api/products?per_page=5&id=${id}&page=${page}`
   );
 
-  if (!result.ok) throw new Error(`data search not okay: ${id}`);
-
+  if (!result.ok) {
+     alert(`Something went wrong with filtering id: ${id} \nPlease change id or try again.`);
+     }
   return result.json();
 };
 

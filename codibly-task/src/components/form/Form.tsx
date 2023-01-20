@@ -1,8 +1,6 @@
 import { Results } from "../../container/Results";
 import "./form.css";
 
-let currentPage = 1;
-
 const Form = () => {
   return (
     <>
@@ -22,4 +20,4 @@ const Form = () => {
   );
 };
 
-export { Form, currentPage };
+export { Form };
