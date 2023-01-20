@@ -4,13 +4,14 @@ import './pagination.css'
 
 const Pagination = () => {
      const url = window.location.href;
-     const stringParams = url.split('?')[1];
-     const pair = stringParams.split('=');
      let pageNumber = '1';
-     if (pair[0] === 'page') {
-          pageNumber = pair[1];
-     }
-     console.log(pageNumber);
+     try {
+          const stringParams = url.split('?')[1];
+          const pair = stringParams.split('=');
+          if (pair[0] === 'page') {
+               pageNumber = pair[1];
+          }
+     } catch { }
      return (
           <div className="pagination">
                {Number(pageNumber) > 1 &&

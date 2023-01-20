@@ -12,7 +12,6 @@ const fetchSearch: QueryFunction<
   ]
 > = async function fetchSearch({ queryKey }) {
   const { id, page } = queryKey[1];
-  console.log("fetchenter");
   const result = await fetch(
     `https://reqres.in/api/products?per_page=5&id=${id}&page=${page}`
   );

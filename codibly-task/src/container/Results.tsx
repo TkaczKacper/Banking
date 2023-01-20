@@ -9,38 +9,34 @@ import './results.css';
 
 let modalDataId = 0;
 let totalPages: number;
-let currentPage: number;
 
 const Results = () => {
   const url = window.location.href;
-  const stringParams = url.split('?')[1];
-  const pair = stringParams.split('=');
-  let pageNumber = '';
+  let pageNumber = '1';
   let idNumber = '';
-  if (pair[0] === 'page') {
-    pageNumber = pair[1];
-    currentPage = Number(pageNumber);
-  } else if (pair[0] === 'id') {
-    idNumber = pair[1];
+  try {
+    const stringParams = url.split('?')[1];
+    const pair = stringParams.split('=');
+    if (pair[0] === 'page') {
+      pageNumber = pair[1];
+    } else if (pair[0] === 'id') {
+      idNumber = pair[1];
+    }
   }
-  console.log(pageNumber, idNumber);
+  catch { }
   const [requestParam] = useState({
     id: idNumber,
     page: pageNumber,
   });
   const result = useQuery(["search", requestParam], fetchSearch);
-  console.log(requestParam);
   const data_ = result?.data?.data ?? [];
   let resPages = result?.data?.total_pages ?? [];
   if (typeof (resPages) === 'number') {
     totalPages = resPages;
   }
-  console.log(totalPages, currentPage);
-  console.log(data_)
 
   const [showModal, setShowModal] = useState(false);
   if (data_.length === undefined) {
-    console.log(Object.keys(data_));
     return (
       <>
         <table className="data-table">
@@ -96,8 +92,7 @@ const Results = () => {
             data_.map((d) => {
               return (
                 <tr key={d.id} style={{ backgroundColor: d.color }} onClick={() => {
-                  modalDataId = d.id - ((currentPage - 1) * 5);
-                  console.log(modalDataId);
+                  modalDataId = d.id - ((Number(pageNumber) - 1) * 5);
                   setShowModal(true);
                 }}>
                   <td>{d.id}</td>
