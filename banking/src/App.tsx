@@ -1,23 +1,19 @@
-import { ToggleColorMode } from "./components";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { NavBar, ToggleColorMode, LoginForm, RegisterForm } from "./components";
 
 function App() {
   return (
-    <div className="App">
-      <ToggleColorMode />
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <NavBar />
+      <div className="App">
+        <ToggleColorMode />
+      </div>
+      <Routes>
+        <Route path="/" />
+        <Route path="/login" element={<LoginForm />} />
+        <Route path="/register" element={<RegisterForm />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
