@@ -1,4 +1,4 @@
-import ToggleColorMode from "./components/ToggleColorMode";
+import { ToggleColorMode } from "./components";
 
 function App() {
   return (
