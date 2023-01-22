@@ -10,7 +10,7 @@ const NavBar = () => {
                     <Link to={'/'}>
                          <img src="https://www.mbank.pl/images/logos/mbank-logo-ind.gif" alt="mBank" className="nav-logo-left" />
                     </Link>
-                    <a className="nav-link">klienci indywidualni</a>
+                    <Link to={'/individual'}><a className="nav-link">klienci indywidualni</a></Link>
                     <a className="nav-link">private banking</a>
                     <a className="nav-link">firmy</a>
                     <a className="nav-link">msp i korporacje</a>

@@ -27,8 +27,16 @@
 
 .list-header {
      font-size: 25px;
-     text-align: center;
      margin-bottom: 20px;
      margin-top: 20px;
      font-weight: 700;
+}
+.list-header:before {
+     content: "";
+     position: absolute;
+     height: 1px;
+     width: 5%;
+     margin-top: 40px;
+     border-bottom: 2px solid rgb(174, 24, 24);
+
 }
