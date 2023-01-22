@@ -4,11 +4,11 @@ import './loginForm.css';
 const LoginForm = () => {
 
      return (
-          <div>
-               LoginForm
-               <form className="login-form">
-                    <input type="text" />
-                    <button type="submit">Login</button>
+          <div className="form-container">
+               <form className="login-form" onSubmit={(e) => { e.preventDefault() }}>
+                    <input type="text" placeholder="username" />
+                    <input type="password" placeholder="password" />
+                    <button className="form-button" type="submit">Login</button>
                </form>
           </div>
      );
