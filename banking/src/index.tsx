@@ -3,8 +3,8 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import theme from './theme'
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { NavBar, LoginForm, RegisterForm, ToggleColorMode } from "./components";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { NavBar, LoginForm, RegisterForm, ToggleColorMode, Footer } from "./components";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -20,7 +20,9 @@ root.render(
           <Route path="/" element={<App />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegisterForm />} />
+          <Route path='*' element={<Navigate to="/" />} />
         </Routes>
+        <Footer />
       </BrowserRouter>
     </ChakraProvider>
   </React.StrictMode>

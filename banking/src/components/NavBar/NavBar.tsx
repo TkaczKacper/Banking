@@ -6,10 +6,20 @@ import './navbar.css';
 const NavBar = () => {
      return (
           <div className="navbar">
-               <Link to={'/'} className="nav-link">Main</Link>
-               <Link to={'/login'} className="nav-link">Login</Link>
-               <Link to={'/register'} className="nav-link">Register</Link>
-               <div className="right-space" />
+               <div className="navbar-left">
+                    <Link to={'/'}>
+                         <img src="https://www.mbank.pl/images/logos/mbank-logo-ind.gif" alt="mBank" className="nav-logo-left" />
+                    </Link>
+                    <a className="nav-link">klienci indywidualni</a>
+                    <a className="nav-link">private banking</a>
+                    <a className="nav-link">firmy</a>
+                    <a className="nav-link">msp i korporacje</a>
+               </div>
+               <div className="navbar-right">
+                    <Link to={'/register'} className="register-btn">załóż konto osobiste</Link>
+                    <Link to={'/login'} className="login-btn">zaloguj</Link>
+                    <div className="right-space" />
+               </div>
           </div>
      );
 };
