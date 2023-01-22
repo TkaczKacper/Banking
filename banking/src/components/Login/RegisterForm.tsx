@@ -63,7 +63,7 @@ const RegisterForm = () => {
                                         value={values.username}
                                         autoComplete="off"
                                    />
-                                   {errors.username}
+                                   {errors.username && touched.username && errors.username}
                                    <input
                                         type="text"
                                         placeholder="e-mail"
@@ -73,7 +73,7 @@ const RegisterForm = () => {
                                         value={values.email}
                                         autoComplete="off"
                                    />
-                                   {errors.email}
+                                   {errors.email && touched.email && errors.email}
                                    <input
                                         type="password"
                                         placeholder="password"
@@ -82,7 +82,7 @@ const RegisterForm = () => {
                                         onBlur={handleBlur}
                                         value={values.password}
                                    />
-                                   {errors.password}
+                                   {errors.password && touched.password && errors.password}
                                    <input
                                         type="password"
                                         placeholder="confirm password"
@@ -91,7 +91,7 @@ const RegisterForm = () => {
                                         onBlur={handleBlur}
                                         value={values.password_conf}
                                    />
-                                   {errors.password_conf}
+                                   {errors.password_conf && touched.password_conf && errors.password_conf}
                                    <button className="form-button" type="submit" disabled={isSubmitting}>Register</button>
                               </form>
                          )}

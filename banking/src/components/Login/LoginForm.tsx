@@ -49,7 +49,7 @@ const LoginForm = () => {
                                    value={values.username}
                                    autoComplete="off"
                               />
-                              {errors.username}
+                              {errors.username && touched.username && errors.username}
                               <input
                                    type="password"
                                    name="password"
@@ -58,7 +58,7 @@ const LoginForm = () => {
                                    onBlur={handleBlur}
                                    value={values.password}
                               />
-                              {errors.password}
+                              {errors.password && touched.password && errors.password}
                               <button className="form-button" type="submit" disabled={isSubmitting}>Login</button>
                          </form>
                     )}
