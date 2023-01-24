@@ -11,7 +11,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "helmet": "^6.0.1",
-    "socket.io": "^4.5.4"
+    "socket.io": "^4.5.4",
+    "yup": "^0.32.11"
   }
 }
