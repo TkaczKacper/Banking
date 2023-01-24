@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Footer } from "../../components";
 import './individual.css';
 import '../../components/NavBar/navbar.css';
@@ -16,7 +17,7 @@ const Individual = () => {
                                    <li>dodatkową <strong>eKartę</strong> do zakupów w internecie</li>
                                    <li><strong>premię</strong> za polecenie konta znajomym</li>
                               </ul>
-                              <button className="register-btn" id="register-individual">załóż konto przez aplikację</button>
+                              <Link to="/register"><button className="register-btn" id="register-individual">załóż konto przez aplikację</button></Link>
                               <p className="text-link">przeczytaj więcej</p>
                          </div>
                          <div className="page-image-container">

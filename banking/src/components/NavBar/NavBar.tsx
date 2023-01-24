@@ -11,9 +11,9 @@ const NavBar = () => {
                          <img src="https://www.mbank.pl/images/logos/mbank-logo-ind.gif" alt="mBank" className="nav-logo-left" />
                     </Link>
                     <Link to={'/individual'}><a className="nav-link">klienci indywidualni</a></Link>
-                    <a className="nav-link">private banking</a>
-                    <a className="nav-link">firmy</a>
-                    <a className="nav-link">msp i korporacje</a>
+                    <a className="nav-link" href="https://www.mbank.pl/private-banking/" target="_blank">private banking</a>
+                    <a className="nav-link" href="https://www.mbank.pl/firmy/" target="_blank">firmy</a>
+                    <a className="nav-link" href="https://www.mbank.pl/msp-korporacje/" target="_blank">msp i korporacje</a>
                </div>
                <div className="navbar-right">
                     <Link to={'/register'} className="register-btn">załóż konto osobiste</Link>
