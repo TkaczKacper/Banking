@@ -17,6 +17,10 @@ const LoginForm = () => {
                          let errors: FormikErrors<FormValues> = {}
                          if (!values.username) {
                               errors.username = 'Username required';
+                         } else if (values.username.length < 6) {
+                              errors.username = "Username too short!";
+                         } else if (values.username.length > 20) {
+                              errors.username = "Username too long!";
                          }
                          if (!values.password) {
                               errors.password = 'Password required';
@@ -24,10 +28,32 @@ const LoginForm = () => {
                          return errors;
                     }}
                     onSubmit={(values, { setSubmitting }) => {
+                         const valuesToFetch = { ...values }
                          setTimeout(() => {
                               alert(JSON.stringify(values, null, 2));
                               setSubmitting(false);
                          }, 400);
+                         fetch("http://localhost:5000/auth/login", {
+                              method: "POST",
+                              credentials: "include",
+                              headers: {
+                                   "Content-Type": "application/json",
+                              },
+                              body: JSON.stringify(valuesToFetch),
+                         })
+                              .catch(err => {
+                                   return;
+                              })
+                              .then(result => {
+                                   if (!result || !result.ok || result.status >= 400) {
+                                        throw new Error('Something went wrong, try again later.')
+                                   }
+                                   return result.json();
+                              })
+                              .then(data => {
+                                   if (!data) return;
+                                   console.log(data);
+                              });
                     }}
                >
                     {({

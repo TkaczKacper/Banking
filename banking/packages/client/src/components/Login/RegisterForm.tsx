@@ -21,15 +21,15 @@ const RegisterForm = () => {
                               let errors: FormikErrors<FormValues> = {}
                               if (!values.username) {
                                    errors.username = 'Username required';
+                              } else if (values.username.length < 6) {
+                                   errors.username = 'Username too short!';
+                              } else if (values.username.length > 20) {
+                                   errors.username = 'Username too long!';
                               }
-                              if (!values.email) {
-                                   errors.email = 'Email required';
-                              } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+                              if (!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/i.test(values.email)) {
                                    errors.email = 'Invalid email';
                               }
-                              if (!values.password) {
-                                   errors.password = 'Password required';
-                              } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/i.test(values.password)) {
+                              if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/i.test(values.password)) {
                                    errors.password = 'Weak password';
                               }
                               if (values.password_conf != values.password) {
@@ -38,10 +38,32 @@ const RegisterForm = () => {
                               return errors;
                          }}
                          onSubmit={(values, { setSubmitting }) => {
+                              const valuesToFetch = { ...values }
                               setTimeout(() => {
                                    alert(JSON.stringify(values, null, 2));
                                    setSubmitting(false);
                               }, 400);
+                              fetch("http://localhost:5000/auth/register", {
+                                   method: "POST",
+                                   credentials: "include",
+                                   headers: {
+                                        "Content-Type": "application/json",
+                                   },
+                                   body: JSON.stringify(valuesToFetch),
+                              })
+                                   .catch(err => {
+                                        return;
+                                   })
+                                   .then(result => {
+                                        if (!result || !result.ok || result.status >= 400) {
+                                             throw new Error('Something went wrong, try again later.')
+                                        }
+                                        return result.json();
+                                   })
+                                   .then(data => {
+                                        if (!data) return;
+                                        console.log(data);
+                                   });
                          }}
                     >
                          {({
