@@ -9,14 +9,14 @@ const server = require('http').createServer(app);
 
 const io = new Server(server, {
      cors: {
-          origin: "http://localhost:3000",
+          origin: "http://192.168.1.100:3000",
           credential: "true"
      },
 })
 
 app.use(helmet());
 app.use(cors({
-     origin: "http://localhost:3000",
+     origin: "http://192.168.1.100:3000",
      credentials: true
 }));
 app.use(express.json());

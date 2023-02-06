@@ -33,7 +33,7 @@ const LoginForm = () => {
                               alert(JSON.stringify(values, null, 2));
                               setSubmitting(false);
                          }, 400);
-                         fetch("http://localhost:5000/auth/login", {
+                         fetch("http://192.168.1.100:5000/auth/login", {
                               method: "POST",
                               credentials: "include",
                               headers: {
