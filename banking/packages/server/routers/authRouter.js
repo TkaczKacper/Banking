@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const yup = require("yup");
+const pool = require("../db");
 
 const formDataLoginSchema = yup.object({
      username: yup.string()
@@ -37,20 +38,36 @@ router.post("/login", (req, res) => {
                console.log("gooood");
           }
      })
+     // const loginData = await pool.query("SELECT id, username FROM users u WHERE u.username=$1", [req.body.username])
+
+     // if (loginData === 0) {
+     //      console.log('hi')
+     // } else {
+     //      console.log('siema')
+     // }
 })
 
-router.post("/register", (req, res) => {
-     const formData = req.body;
-     formDataRegisterSchema.validate(formData).catch(err => {
-          res.status(422).send();
-          console.log(req.body.email);
-          console.log(err.errors);
-     }).then(valid => {
-          if (valid) {
-               res.status(200).send();
-               console.log("registered");
-          }
-     })
+router.post("/register", async (req, res) => {
+     const formData = req.body; 
+     const existingUser = await pool.query("SELECT username FROM users WHERE username=$1", [req.body.username])
+     if (existingUser.rowCount === 0) { 
+          formDataRegisterSchema.validate(formData).catch(err => {
+               res.status(422).send();
+               console.log(req.body.email);
+               console.log(err.errors);
+          }).then(valid => {
+               if (valid) {
+                    res.status(200).send();
+                    pool.query("INSERT INTO users(username,email,password) VALUES ($1,$2,$3)", [req.body.username, req.body.email, req.body.password])
+                    console.log("registered");
+               }
+          })
+
+          res.json({ loggedIn: true })
+     } else {
+          console.log("username taken")
+          res.json({ loggedIn: false, status: "Username taken" });
+     }
 })
 
 module.exports = router;

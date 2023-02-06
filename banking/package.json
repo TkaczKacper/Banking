@@ -4,6 +4,9 @@
      "main": "index.js",
      "private": "true",
      "workspaces": [
-       "packages/*"
-     ]
+          "packages/*"
+     ],
+     "dependencies": {
+          "dotenv": "^16.0.3"
+     }
 }
