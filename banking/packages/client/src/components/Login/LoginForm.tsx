@@ -9,6 +9,7 @@ interface FormValues {
 
 const LoginForm = () => {
      const initialValues: FormValues = { username: '', password: '' };
+     let validationError: string = '';
      return (
           <div className="form-container">
                <Formik
@@ -30,9 +31,8 @@ const LoginForm = () => {
                     onSubmit={(values, { setSubmitting }) => {
                          const valuesToFetch = { ...values }
                          setTimeout(() => {
-                              alert(JSON.stringify(values, null, 2));
                               setSubmitting(false);
-                         }, 400);
+                         }, 100);
                          fetch("http://192.168.1.100:5000/auth/login", {
                               method: "POST",
                               credentials: "include",
@@ -52,7 +52,7 @@ const LoginForm = () => {
                               })
                               .then(data => {
                                    if (!data) return;
-                                   console.log(data);
+                                   return validationError = data.status;
                               });
                     }}
                >
@@ -63,9 +63,9 @@ const LoginForm = () => {
                          handleChange,
                          handleBlur,
                          handleSubmit,
-                         isSubmitting,
+                         isSubmitting
                     }) => (
-                         <form className="login-form" onSubmit={handleSubmit}>
+                         <form className="login-form" onSubmit={handleSubmit} onChange={() => { validationError = '' }}>
                               <input
                                    type="username"
                                    name="username"
@@ -85,6 +85,7 @@ const LoginForm = () => {
                                    value={values.password}
                               />
                               {errors.password && touched.password && errors.password}
+                              {!errors.password && validationError}
                               <button className="form-button" type="submit" disabled={isSubmitting}>Login</button>
                          </form>
                     )}

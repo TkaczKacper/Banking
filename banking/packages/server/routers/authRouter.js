@@ -27,24 +27,24 @@ const formDataRegisterSchema = yup.object({
           .oneOf([yup.ref('password'), null], "Password must match.")
 })
 
-router.post("/login", (req, res) => {
+router.post("/login", async (req, res) => {
      const formData = req.body;
-     formDataLoginSchema.validate(formData).catch(err => {
-          res.status(422).send();
-          console.log(err.errors);
-     }).then(valid => {
-          if (valid) {
-               res.status(200).send();
-               console.log("gooood");
-          }
-     })
-     // const loginData = await pool.query("SELECT id, username FROM users u WHERE u.username=$1", [req.body.username])
+     const loginData = await pool.query(`SELECT username FROM users u WHERE u.username='${req.body.username}'`)
 
-     // if (loginData === 0) {
-     //      console.log('hi')
-     // } else {
-     //      console.log('siema')
-     // }
+     if (loginData.rowCount === 1) {
+          formDataLoginSchema.validate(formData).catch(err => {
+               res.json({ loggedIn: false, status: 'invalid credentials'})
+               console.log(err.errors);
+          }).then(valid => {
+               if (valid) {
+                    res.json({ loggedIn: true, status: 'success'})
+                    console.log("gooood");
+               }
+          })
+     } else {
+          res.json({ loggedIn: false, status: 'invalid credentials'})
+          console.log('siema')
+     }
 })
 
 router.post("/register", async (req, res) => {
