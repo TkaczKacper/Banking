@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const yup = require("yup");
 const pool = require("../db");
+const bcrypt = require('bcrypt');
 
 const formDataLoginSchema = yup.object({
      username: yup.string()
@@ -29,16 +30,21 @@ const formDataRegisterSchema = yup.object({
 
 router.post("/login", async (req, res) => {
      const formData = req.body;
-     const loginData = await pool.query(`SELECT username FROM users u WHERE u.username='${req.body.username}'`)
-
+     const loginData = await pool.query(`SELECT username, password FROM users u WHERE u.username='${req.body.username}'`)
      if (loginData.rowCount === 1) {
           formDataLoginSchema.validate(formData).catch(err => {
                res.json({ loggedIn: false, status: 'invalid credentials'})
                console.log(err.errors);
           }).then(valid => {
                if (valid) {
-                    res.json({ loggedIn: true, status: 'success'})
-                    console.log("gooood");
+                    bcrypt.compare(req.body.password, loginData.rows[0].password).then(res2 => {
+                         if(res2) {
+                              res.json({ loggedIn: true, status: 'success'})
+                         } else {
+                              res.json({ loggedIn: false, status: 'invalid credentials'})
+                         }
+                    })
+                    .catch(err => console.error(err.message))
                }
           })
      } else {
@@ -49,24 +55,28 @@ router.post("/login", async (req, res) => {
 
 router.post("/register", async (req, res) => {
      const formData = req.body; 
-     const existingUser = await pool.query("SELECT username FROM users WHERE username=$1", [req.body.username])
-     if (existingUser.rowCount === 0) { 
+     const existingUser = await pool.query("SELECT username FROM users WHERE username=$1", [req.body.username]);
+     const existingEmail = await pool.query("SELECT email FROM users WHERE email=$1", [req.body.email])
+     const passwordHashed = await bcrypt.hash(req.body.password, 8)
+     if (existingUser.rowCount === 0 && existingEmail.rowCount === 0) { 
           formDataRegisterSchema.validate(formData).catch(err => {
                res.status(422).send();
-               console.log(req.body.email);
                console.log(err.errors);
           }).then(valid => {
                if (valid) {
                     res.status(200).send();
-                    pool.query("INSERT INTO users(username,email,password) VALUES ($1,$2,$3)", [req.body.username, req.body.email, req.body.password])
-                    console.log("registered");
+                    pool.query("INSERT INTO users(username,email,password) VALUES ($1,$2,$3)", [req.body.username, req.body.email, passwordHashed]);
                }
           })
-
           res.json({ loggedIn: true })
      } else {
-          console.log("username taken")
-          res.json({ loggedIn: false, status: "Username taken" });
+          if (existingUser.rowCount === 1){
+               console.log("username taken");
+               res.json({ loggedIn: false, status: "Username taken" });
+          } else if (existingEmail.rowCount === 1) {
+               console.log("email taken");
+               res.json({ loggedIn: false, status: "Email address taken."})
+          }
      }
 })
 
