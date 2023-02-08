@@ -28,14 +28,15 @@ app.use(
    session({
       secret: process.env.COOKIE_SECRET,
       credentials: true,
-      name: "sid",
-      resave: false,
+      name: process.env.SESSION_NAME,
+      resave: true,
       saveUninitialized: false,
       cookie: {
          secure: process.env.environment === "production",
-         httpOnly: true,
+         maxAge: process.env.SESSION_LIFETIME,
          sameSite: process.env.environment === "production" ? "none" : "lax",
       },
+      store: store,
    })
 );
 
