@@ -80,7 +80,6 @@ router.post("/login", async (req, res) => {
          });
    } else {
       res.json({ loggedIn: false, status: "invalid credentials" });
-      console.log("siema");
    }
 });
 
@@ -99,19 +98,17 @@ router.post("/register", async (req, res) => {
       formDataRegisterSchema
          .validate(formData)
          .catch((err) => {
-            res.status(422).send();
-            console.log(err.errors);
+            res.json({ loggedIn: false, content: `${err.errors}` });
          })
          .then((valid) => {
             if (valid) {
-               res.status(200).send();
                pool.query(
                   "INSERT INTO users(username,email,password) VALUES ($1,$2,$3)",
                   [req.body.username, req.body.email, passwordHashed]
                );
+               res.json({ loggedIn: true, content: "Registered" });
             }
          });
-      res.json({ loggedIn: true });
    } else {
       if (existingUser.rowCount === 1) {
          console.log("username taken");

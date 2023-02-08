@@ -16,6 +16,7 @@ const RegisterForm = () => {
       password: "",
       password_conf: "",
    };
+   let registerResult: string = "";
    return (
       <>
          <div className="form-container register-form">
@@ -38,7 +39,7 @@ const RegisterForm = () => {
                      errors.email = "Invalid email";
                   }
                   if (
-                     !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/i.test(
+                     !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[a-zA-Z\d@$!%*?&]{8,}$/i.test(
                         values.password
                      )
                   ) {
@@ -52,7 +53,6 @@ const RegisterForm = () => {
                onSubmit={(values, { setSubmitting }) => {
                   const valuesToFetch = { ...values };
                   setTimeout(() => {
-                     alert(JSON.stringify(values, null, 2));
                      setSubmitting(false);
                   }, 400);
                   fetch("http://192.168.1.100:5000/auth/register", {
@@ -63,9 +63,7 @@ const RegisterForm = () => {
                      },
                      body: JSON.stringify(valuesToFetch),
                   })
-                     .catch((err) => {
-                        return;
-                     })
+                     .catch((err) => {})
                      .then((result) => {
                         if (!result || !result.ok || result.status >= 400) {
                            throw new Error(
@@ -75,8 +73,10 @@ const RegisterForm = () => {
                         return result.json();
                      })
                      .then((data) => {
-                        if (!data) return;
-                        console.log(data);
+                        if (data) {
+                           console.log(data);
+                           registerResult = data.content;
+                        } else return;
                      });
                }}
             >
@@ -89,7 +89,13 @@ const RegisterForm = () => {
                   handleSubmit,
                   isSubmitting,
                }) => (
-                  <form className="login-form" onSubmit={handleSubmit}>
+                  <form
+                     className="login-form"
+                     onSubmit={handleSubmit}
+                     onChange={() => {
+                        registerResult = "";
+                     }}
+                  >
                      <input
                         type="text"
                         placeholder="username"
@@ -130,6 +136,7 @@ const RegisterForm = () => {
                      {errors.password_conf &&
                         touched.password_conf &&
                         errors.password_conf}
+                     {!errors.password_conf && registerResult}
                      <button
                         className="form-button"
                         type="submit"
