@@ -1,70 +1,71 @@
 .navbar {
-     display: flex;
-     height: 50px;
-     width: 100%;
+   display: flex;
+   height: 50px;
+   width: 100%;
 }
 .navbar-left {
-     display: flex;
-     justify-content: flex-start;
-     height: 100%;
-     width: 100%;
+   display: flex;
+   justify-content: flex-start;
+   height: 100%;
+   width: 100%;
 }
-.navbar-right { 
-     display: flex;
-     flex-direction: row;
-     justify-content: center;
-     align-items: center;
-     height: 100%;
-     width: 30%;
+.navbar-right {
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+   align-items: center;
+   height: 100%;
+   width: 30%;
 }
 .navbar-right > * {
-     margin: 10px;
+   margin: 10px;
 }
 .nav-link {
-     font-size: 30px;
-     height: 100%;
+   font-size: 30px;
+   height: 100%;
 }
 a {
-     margin-right: 20px;
+   margin-right: 20px;
 }
 .nav-link:after {
-     display:block;
-     content: '';
-     border-bottom: solid 3px #b60101;  
-     transform: scaleX(0);  
-     transform-origin: 0% 50%;
-     transition: transform 500ms ease-in-out;
+   display: block;
+   content: "";
+   border-bottom: solid 3px #b60101;
+   transform: scaleX(0);
+   transform-origin: 0% 50%;
+   transition: transform 500ms ease-in-out;
 }
 .nav-link:hover:after {
-     transform: scaleX(1); transform-origin:   0% 50%;
+   transform: scaleX(1);
+   transform-origin: 0% 50%;
 }
 
 .right-space {
-     width: 60px;
+   width: 60px;
 }
 .nav-logo {
-     height: 100%;
-     width: auto;
+   height: 100%;
+   width: auto;
 }
 .register-btn {
-     padding: 10px;
-     text-align: center;
-     background-color: rgb(255, 62, 62);
-     color: white;
-     border-radius: 20px;
-     cursor: pointer;
+   padding: 10px;
+   text-align: center;
+   background-color: rgb(255, 62, 62);
+   color: white;
+   border-radius: 20px;
+   cursor: pointer;
 }
 .register-btn:hover {
-     background-color: rgb(210, 54, 54);
+   background-color: rgb(210, 54, 54);
 }
 .login-btn {
-     font-size: 20px;
-     font-weight: 600;
-     color: #008520;
-     text-decoration: #008520;
+   font-size: 20px;
+   font-weight: 600;
+   color: #008520;
+   text-decoration: #008520;
 }
 .login-btn:hover {
-     font-size: 24px;
-     font-weight: 600;
-     color: #00a326;
+   font-size: 24px;
+   font-weight: 600;
+   color: #00a326;
 }

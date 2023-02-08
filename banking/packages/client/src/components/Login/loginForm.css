@@ -1,40 +1,40 @@
 .form-container {
-     display: flex;
-     justify-content: center;
-     align-items: flex-end;
-     height: 55vh;
+   display: flex;
+   justify-content: center;
+   align-items: flex-end;
+   height: 55vh;
 }
 .register-form {
-     margin-top: 100px;
+   margin-top: 100px;
 }
 .login-form {
-     display: flex;
-     flex-direction: column;
-     align-items: center;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
 }
 .login-form > input {
-     width: 300px;
-     height: 50px;
-     margin: 10px;
-     text-align: center;
-     font-size: 25px;
-     border: 1px solid rgb(75, 80, 85);
-     border-radius: 25px;
+   width: 300px;
+   height: 50px;
+   margin: 10px;
+   text-align: center;
+   font-size: 25px;
+   border: 1px solid rgb(75, 80, 85);
+   border-radius: 25px;
 }
 
 .form-button {
-     padding: 10px;
-     width: 100px;
-     border: 1px solid ;
-     border-radius: 20px;
-     cursor: pointer;
-     margin-top: 10px;
+   padding: 10px;
+   width: 100px;
+   border: 1px solid;
+   border-radius: 20px;
+   cursor: pointer;
+   margin-top: 10px;
 }
 .form-button:hover {
-     padding: 10px;
-     width: 100px;
-     border: 1px solid slategrey;
-     border-radius: 20px;
-     cursor: pointer;
-     background-color: #c0d1c6;
+   padding: 10px;
+   width: 100px;
+   border: 1px solid slategrey;
+   border-radius: 20px;
+   cursor: pointer;
+   background-color: #c0d1c6;
 }

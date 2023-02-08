@@ -1,12 +1,12 @@
 {
-     "author": "Kacper Tkacz",
-     "version": "1.0.0",
-     "main": "index.js",
-     "private": "true",
-     "workspaces": [
-          "packages/*"
-     ],
-     "dependencies": {
-          "dotenv": "^16.0.3"
-     }
+   "author": "Kacper Tkacz",
+   "version": "1.0.0",
+   "main": "index.js",
+   "private": "true",
+   "workspaces": [
+      "packages/*"
+   ],
+   "dependencies": {
+      "dotenv": "^16.0.3"
+   }
 }
