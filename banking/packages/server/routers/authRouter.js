@@ -99,27 +99,31 @@ router.post("/register", async (req, res) => {
    );
    const passwordHashed = await bcrypt.hash(req.body.password, 8);
    if (existingUser.rowCount === 0 && existingEmail.rowCount === 0) {
-      formDataRegisterSchema
-         .validate(formData)
-         .catch((err) => {
-            res.json({ loggedIn: false, content: `${err.errors}` });
-         })
-         .then((valid) => {
-            if (valid) {
-               pool.query(
-                  "INSERT INTO users(username,email,password) VALUES ($1,$2,$3)",
-                  [req.body.username, req.body.email, passwordHashed]
-               );
-               res.json({ loggedIn: true, content: "Registered" });
-            }
+      formDataRegisterSchema.validate(formData).catch((err) => {
+         res.json({ loggedIn: false, content: `${err.errors}` });
+      });
+      const newUserQuery = await pool.query(
+         "INSERT INTO users(username,email,password) VALUES ($1,$2,$3) RETURNING id, username",
+         [req.body.username, req.body.email, passwordHashed]
+      );
+      console.log(newUserQuery.rows);
+      if (newUserQuery.rows[0].username) {
+         res.json({
+            loggedIn: true,
+            content: "Registered",
+            details: {
+               username: newUserQuery.rows[0].username,
+               userId: newUserQuery.rows[0].id,
+            },
          });
+      }
    } else {
       if (existingUser.rowCount === 1) {
          console.log("username taken");
-         res.json({ loggedIn: false, status: "Username taken" });
+         res.json({ loggedIn: false, content: "Username taken" });
       } else if (existingEmail.rowCount === 1) {
          console.log("email taken");
-         res.json({ loggedIn: false, status: "Email address taken." });
+         res.json({ loggedIn: false, content: "Email address taken." });
       }
    }
 });
