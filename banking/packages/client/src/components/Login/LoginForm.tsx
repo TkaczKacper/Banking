@@ -67,7 +67,7 @@ const LoginForm = () => {
                               setCookie("isLogged", data.loggedIn);
                               setCookie("userId", data.details.userId);
                               setCookie("username", data.details.username);
-                              window.location.href = "/";
+                              window.location.href = "/account";
                            }
                            return (validationError = data.status);
                         });
