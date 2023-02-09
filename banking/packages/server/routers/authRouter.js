@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const yup = require("yup");
 const pool = require("../db");
+const yup = require("yup");
 const bcrypt = require("bcrypt");
 
 const formDataLoginSchema = yup.object({
