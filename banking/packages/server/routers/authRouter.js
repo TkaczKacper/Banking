@@ -46,7 +46,7 @@ const formDataRegisterSchema = yup.object({
 router.post("/login", async (req, res) => {
    const formData = req.body;
    const loginData = await pool.query(
-      `SELECT username, password FROM users u WHERE u.username='${req.body.username}'`
+      `SELECT id, username, password FROM users u WHERE u.username='${req.body.username}'`
    );
    if (loginData.rowCount === 1) {
       formDataLoginSchema
@@ -67,6 +67,10 @@ router.post("/login", async (req, res) => {
                         res.json({
                            loggedIn: true,
                            status: "success",
+                           details: {
+                              username: req.body.username,
+                              userId: loginData.rows[0].id,
+                           },
                         });
                      } else {
                         res.json({

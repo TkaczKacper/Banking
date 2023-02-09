@@ -1,6 +1,7 @@
 import React from "react";
 import "./loginForm.css";
 import { Formik, FormikErrors } from "formik";
+import { useCookies } from "react-cookie";
 
 interface FormValues {
    username: string;
@@ -8,6 +9,12 @@ interface FormValues {
 }
 
 const LoginForm = () => {
+   const [cookie, setCookie, removeCookie] = useCookies([
+      "isLogged",
+      "userId",
+      "username",
+   ]);
+   console.log(cookie);
    const initialValues: FormValues = { username: "", password: "" };
    let validationError: string = "";
    return (
@@ -54,6 +61,13 @@ const LoginForm = () => {
                   })
                   .then((data) => {
                      if (!data) return;
+                     if (data.details) {
+                        console.log(data.loggedIn);
+                        setCookie("isLogged", data.loggedIn);
+                        setCookie("userId", data.details.userId);
+                        setCookie("username", data.details.username);
+                        window.location.reload();
+                     }
                      return (validationError = data.status);
                   });
             }}

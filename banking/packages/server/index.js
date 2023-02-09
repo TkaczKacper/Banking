@@ -33,10 +33,8 @@ app.use(
       saveUninitialized: false,
       cookie: {
          secure: process.env.environment === "production",
-         maxAge: process.env.SESSION_LIFETIME,
          sameSite: process.env.environment === "production" ? "none" : "lax",
       },
-      store: store,
    })
 );
 
