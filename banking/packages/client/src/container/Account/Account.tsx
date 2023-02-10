@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
+import { AccountNavBar } from "../../components";
 import "./account.css";
 
 const Account = () => {
@@ -33,20 +34,21 @@ const Account = () => {
    }, []);
    return (
       <>
+         <AccountNavBar />
          {accounts.length >= 1 ? (
             <table>
                <thead>
                   <td>numer konta</td>
-                  <td>waluta</td>
                   <td>stan konta</td>
+                  <td>waluta</td>
                </thead>
                <tbody>
                   {accounts.map((item: any) => {
                      return (
                         <tr key={item.accountnumber}>
                            <td>{item.accountnumber}</td>
-                           <td>{item.currency}</td>
                            <td>{item.accountbalance}</td>
+                           <td>{item.currency}</td>
                         </tr>
                      );
                   })}
