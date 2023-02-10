@@ -33,11 +33,25 @@ const Account = () => {
    }, []);
    return (
       <>
-         <div>hi </div>
          {accounts.length >= 1 ? (
-            accounts.map((item: any) => {
-               return <li key={item.accountnumber}>{item.ownerid}</li>;
-            })
+            <table>
+               <thead>
+                  <td>numer konta</td>
+                  <td>waluta</td>
+                  <td>stan konta</td>
+               </thead>
+               <tbody>
+                  {accounts.map((item: any) => {
+                     return (
+                        <tr key={item.accountnumber}>
+                           <td>{item.accountnumber}</td>
+                           <td>{item.currency}</td>
+                           <td>{item.accountbalance}</td>
+                        </tr>
+                     );
+                  })}
+               </tbody>
+            </table>
          ) : (
             <div>accounts not found</div>
          )}
