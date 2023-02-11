@@ -38,9 +38,11 @@ const Account = () => {
          {accounts.length >= 1 ? (
             <table>
                <thead>
-                  <td>numer konta</td>
-                  <td>stan konta</td>
-                  <td>waluta</td>
+                  <tr>
+                     <th>numer konta</th>
+                     <th>stan konta</th>
+                     <th>waluta</th>
+                  </tr>
                </thead>
                <tbody>
                   {accounts.map((item: any) => {

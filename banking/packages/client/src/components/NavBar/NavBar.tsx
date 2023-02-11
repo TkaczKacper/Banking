@@ -30,8 +30,8 @@ const NavBar = () => {
                </Link>
             )}
 
-            <Link to={"/individual"}>
-               <a className="nav-link">klienci indywidualni</a>
+            <Link to={"/individual"} className="nav-link">
+               klienci indywidualni
             </Link>
             <a
                className="nav-link"

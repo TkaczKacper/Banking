@@ -10,7 +10,6 @@ const NewAccountModal = (props: props) => {
    function closeModal() {
       props.setModalActive(false);
    }
-   console.log(props.modalActive);
    return (
       <Modal
          isOpen={props.modalActive}
