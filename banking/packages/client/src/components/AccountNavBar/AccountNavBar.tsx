@@ -13,6 +13,7 @@ const AccountNavBar = () => {
             </div>
             <div>Przelew</div>
             <div>Historia transakcji</div>
+            <Link to={"/account/exchange"}>Kantor</Link>
             <button onClick={() => setModalActive(true)}>Nowy rachunek</button>
          </div>
          <NewAccountModal
