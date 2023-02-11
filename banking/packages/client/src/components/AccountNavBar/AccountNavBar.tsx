@@ -1,26 +1,28 @@
 import { Link } from "react-router-dom";
-import "./accountNavBar.css";
-import NewAccountModal from "../NewAccountModal/NewAccountModal";
 import { useState } from "react";
-import Modal from "react-modal";
+import "./accountNavBar.css";
+import NewAccountModal, {
+   modalVariablesContext,
+} from "../NewAccountModal/NewAccountModal";
 
 const AccountNavBar = () => {
-   const [isModalOpen, setModalOpen] = useState(false);
+   const [modalActive, setModalActive] = useState(false);
+   const displayModal = () => {
+      setModalActive(true);
+      console.log(modalActive);
+   };
    return (
-      <div className="accountNavBar">
-         <div>
-            <Link to="/account">Twoje sprawy</Link>
-         </div>
-         <div>Przelew</div>
-         <div>Historia transakcji</div>
-         <button onClick={() => setModalOpen(true)}>Nowy rachunek</button>
-         <Modal isOpen={isModalOpen}>
-            <button onClick={() => setModalOpen(false)} className="modalButton">
-               X
-            </button>
+      <modalVariablesContext.Provider value={{ modalActive, setModalActive }}>
+         <div className="accountNavBar">
+            <div>
+               <Link to="/account">Twoje sprawy</Link>
+            </div>
+            <div>Przelew</div>
+            <div>Historia transakcji</div>
+            <button onClick={displayModal}>Nowy rachunek</button>
             <NewAccountModal />
-         </Modal>
-      </div>
+         </div>
+      </modalVariablesContext.Provider>
    );
 };
 

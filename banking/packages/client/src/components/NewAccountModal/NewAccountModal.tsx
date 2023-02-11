@@ -1,18 +1,27 @@
 import "./newAccountModal.css";
-import { useState } from "react";
+import { createContext, useContext } from "react";
 import Modal from "react-modal";
-const NewAccountModal = () => {
-   const [modalActive, setModalActive] = useState(true);
 
+export const modalVariablesContext = createContext({
+   modalActive: false,
+   setModalActive: (c: boolean) => {},
+});
+
+const NewAccountModal = () => {
+   const { modalActive, setModalActive } = useContext(modalVariablesContext);
    function closeModal() {
       setModalActive(false);
    }
-
+   console.log("test");
    return (
-      <Modal isOpen={modalActive} onRequestClose={closeModal}>
+      <Modal
+         isOpen={modalActive}
+         onRequestClose={closeModal}
+         ariaHideApp={false}
+      >
+         <button onClick={closeModal}>click</button>
          <form></form>
       </Modal>
    );
 };
-
 export default NewAccountModal;
