@@ -1,21 +1,19 @@
 import "./newAccountModal.css";
-import { createContext, useContext } from "react";
 import Modal from "react-modal";
 
-export const modalVariablesContext = createContext({
-   modalActive: false,
-   setModalActive: (c: boolean) => {},
-});
+type props = {
+   modalActive: boolean;
+   setModalActive: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
-const NewAccountModal = () => {
-   const { modalActive, setModalActive } = useContext(modalVariablesContext);
+const NewAccountModal = (props: props) => {
    function closeModal() {
-      setModalActive(false);
+      props.setModalActive(false);
    }
-   console.log("test");
+   console.log(props.modalActive);
    return (
       <Modal
-         isOpen={modalActive}
+         isOpen={props.modalActive}
          onRequestClose={closeModal}
          ariaHideApp={false}
       >
