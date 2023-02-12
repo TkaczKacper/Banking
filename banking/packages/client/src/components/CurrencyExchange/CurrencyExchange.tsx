@@ -19,14 +19,13 @@ const CurrencyExchange = () => {
       <>
          currency
          <div>XD?</div>
-         {Object.keys(data).map((keyName: any, index) => {
-            return (
-               <li key={index}>
-                  {keyName}
-                  {data[keyName]}
-               </li>
-            );
-         })}
+         <div className="cantor-container">
+            <select>
+               {Object.keys(data).map((keyName: any, index) => {
+                  return <option value={keyName}>{keyName}</option>;
+               })}
+            </select>
+         </div>
       </>
    );
 };

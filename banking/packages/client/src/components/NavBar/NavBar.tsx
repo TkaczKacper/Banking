@@ -57,17 +57,20 @@ const NavBar = () => {
          </div>
          <div className="navbar-right">
             {cookie.userId ? (
-               <button
-                  className="logout-btn"
-                  onClick={() => {
-                     setCookie("isLogged", false);
-                     removeCookie("userId");
-                     removeCookie("username");
-                     window.location.href = "/login";
-                  }}
-               >
-                  Wyloguj
-               </button>
+               <>
+                  <Link to={"/account"}>twoje konto</Link>
+                  <button
+                     className="logout-btn"
+                     onClick={() => {
+                        setCookie("isLogged", false);
+                        removeCookie("userId");
+                        removeCookie("username");
+                        window.location.href = "/login";
+                     }}
+                  >
+                     Wyloguj
+                  </button>
+               </>
             ) : (
                <>
                   <Link to={"/register"} className="register-btn">
