@@ -69,7 +69,6 @@ const RegisterForm = () => {
                         },
                         body: JSON.stringify(valuesToFetch),
                      })
-                        .catch((err) => {})
                         .then((result) => {
                            if (!result || !result.ok || result.status >= 400) {
                               throw new Error(
@@ -83,9 +82,13 @@ const RegisterForm = () => {
                               console.log(data);
                               registerResult = data.content;
                               if (data.content === "Registered") {
-                                 setCookie("isLogged", true);
-                                 setCookie("userId", data.details.userId);
-                                 setCookie("username", data.details.username);
+                                 setCookie("isLogged", true, { path: "/" });
+                                 setCookie("userId", data.details.userId, {
+                                    path: "/",
+                                 });
+                                 setCookie("username", data.details.username, {
+                                    path: "/",
+                                 });
                                  window.location.href = "/account";
                               }
                            } else return;

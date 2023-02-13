@@ -62,7 +62,7 @@ const NavBar = () => {
                   <button
                      className="logout-btn"
                      onClick={() => {
-                        setCookie("isLogged", false);
+                        setCookie("isLogged", false, { path: "/" });
                         removeCookie("userId");
                         removeCookie("username");
                         window.location.href = "/login";

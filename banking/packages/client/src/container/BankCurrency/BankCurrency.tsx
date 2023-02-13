@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { AccountNavBar, ExchangeRate } from "../../components";
 import "./bankCurrency.css";
 
-const BankCurrency = () => {
+export const GetCurrencyData = () => {
    const [data, setData] = useState([]);
 
    const fetchData = async () => {
@@ -18,6 +18,12 @@ const BankCurrency = () => {
    useEffect(() => {
       fetchData();
    }, []);
+
+   return data;
+};
+
+const BankCurrency = () => {
+   const data = GetCurrencyData();
 
    return (
       <>

@@ -49,9 +49,6 @@ const LoginForm = () => {
                         },
                         body: JSON.stringify(valuesToFetch),
                      })
-                        .catch((err) => {
-                           return;
-                        })
                         .then((result) => {
                            if (!result || !result.ok || result.status >= 400) {
                               throw new Error(
@@ -63,10 +60,15 @@ const LoginForm = () => {
                         .then((data) => {
                            if (!data) return;
                            if (data.details) {
-                              console.log(data.loggedIn);
-                              setCookie("isLogged", data.loggedIn);
-                              setCookie("userId", data.details.userId);
-                              setCookie("username", data.details.username);
+                              setCookie("isLogged", true, {
+                                 path: "/",
+                              });
+                              setCookie("userId", data.details.userId, {
+                                 path: "/",
+                              });
+                              setCookie("username", data.details.username, {
+                                 path: "/",
+                              });
                               window.location.href = "/account";
                            }
                            return (validationError = data.status);
