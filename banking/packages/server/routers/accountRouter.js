@@ -16,6 +16,18 @@ router.get("/:id", async (req, res) => {
    }
 });
 
+router.get("/new/:id", async (req, res) => {
+   const accountsCurrencies = await pool.query(
+      "SELECT currency FROM account WHERE ownerId=$1",
+      [req.params.id]
+   );
+   let accounts = [];
+   accountsCurrencies.rows.forEach((account) => {
+      accounts.push(account.currency);
+   });
+   res.json({ accounts: accounts });
+});
+
 router.post("/new", async (req, res) => {
    const accounts = await pool.query(
       "SELECT currency FROM account WHERE ownerid = $1",

@@ -2,6 +2,7 @@ import "./newAccountModal.css";
 import Modal from "react-modal";
 import { GetCurrencyData } from "../../container/BankCurrency/BankCurrency";
 import { useCookies } from "react-cookie";
+import { useState, useEffect } from "react";
 
 type props = {
    modalActive: boolean;
@@ -11,8 +12,25 @@ type props = {
 const NewAccountModal = (props: props) => {
    const data = GetCurrencyData();
    const [cookie] = useCookies(["userId"]);
+   const [userAccounts, setUserAccounts] = useState([""]);
 
-   let message: string = "";
+   const fetchData = async () => {
+      fetch(`http://192.168.1.100:5000/account/new/${cookie.userId}`, {
+         method: "GET",
+         credentials: "include",
+         headers: {
+            "Content-Type": "application/json",
+         },
+      })
+         .then((res) => res.json())
+         .then((data) => {
+            return setUserAccounts(data.accounts);
+         });
+   };
+
+   useEffect(() => {
+      fetchData();
+   }, []);
 
    function closeModal() {
       props.setModalActive(false);
@@ -56,7 +74,6 @@ const NewAccountModal = (props: props) => {
                      }
                   })
                   .then((data) => {
-                     message = data.details;
                      const container = document.getElementById(
                         "error"
                      ) as HTMLDivElement;
@@ -66,11 +83,12 @@ const NewAccountModal = (props: props) => {
          >
             <select name="currency">
                {Object.keys(data).map((keyName: string, index) => {
-                  return (
-                     <option key={index} value={keyName}>
-                        {keyName}
-                     </option>
-                  );
+                  if (!userAccounts.includes(keyName))
+                     return (
+                        <option key={index} value={keyName}>
+                           {keyName}
+                        </option>
+                     );
                })}
             </select>
             <button type="submit" id="open-account-btn">
