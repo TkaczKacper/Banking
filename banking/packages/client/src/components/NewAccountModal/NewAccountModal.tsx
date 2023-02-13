@@ -12,6 +12,8 @@ const NewAccountModal = (props: props) => {
    const data = GetCurrencyData();
    const [cookie] = useCookies(["userId"]);
 
+   let message: string = "";
+
    function closeModal() {
       props.setModalActive(false);
    }
@@ -31,6 +33,35 @@ const NewAccountModal = (props: props) => {
                };
                const currency = target.currency.value;
                console.log(currency);
+
+               const valuesToFetch = {
+                  currency: currency,
+                  userId: cookie.userId,
+               };
+               fetch("http://192.168.1.100:5000/account/new", {
+                  method: "POST",
+                  credentials: "include",
+                  headers: {
+                     "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(valuesToFetch),
+               })
+                  .then((result) => {
+                     if (!result || !result.ok || result.status >= 400) {
+                        throw new Error(
+                           "Something went wrong, try again later."
+                        );
+                     } else {
+                        return result.json();
+                     }
+                  })
+                  .then((data) => {
+                     message = data.details;
+                     const container = document.getElementById(
+                        "error"
+                     ) as HTMLDivElement;
+                     container.innerHTML = data.details;
+                  });
             }}
          >
             <select name="currency">
@@ -45,6 +76,7 @@ const NewAccountModal = (props: props) => {
             <button type="submit" id="open-account-btn">
                otworz rachunek
             </button>
+            <div id="error"></div>
          </form>
       </Modal>
    );

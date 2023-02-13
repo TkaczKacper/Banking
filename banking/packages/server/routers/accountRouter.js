@@ -16,4 +16,27 @@ router.get("/:id", async (req, res) => {
    }
 });
 
+router.post("/new", async (req, res) => {
+   const accounts = await pool.query(
+      "SELECT currency FROM account WHERE ownerid = $1",
+      [req.body.userId]
+   );
+   let accountAvailable = true;
+   for (let i = 0; i < accounts.rows.length; i++) {
+      if (accounts.rows[i].currency === req.body.currency) {
+         accountAvailable = false;
+         break;
+      }
+   }
+   if (accountAvailable) {
+      await pool.query(
+         "INSERT INTO account(ownerid, currency, accountbalance) VALUES ($1, $2, 400)",
+         [req.body.userId, req.body.currency]
+      );
+      res.json({ details: "konto zalozone" });
+   } else {
+      res.json({ details: "masz juz konto w tej walucie" });
+   }
+});
+
 module.exports = router;

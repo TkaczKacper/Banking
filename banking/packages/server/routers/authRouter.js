@@ -106,7 +106,6 @@ router.post("/register", async (req, res) => {
          "INSERT INTO users(username,email,password) VALUES ($1,$2,$3) RETURNING id, username",
          [req.body.username, req.body.email, passwordHashed]
       );
-      console.log(newUserQuery.rows);
       if (newUserQuery.rows[0].username) {
          res.json({
             loggedIn: true,
