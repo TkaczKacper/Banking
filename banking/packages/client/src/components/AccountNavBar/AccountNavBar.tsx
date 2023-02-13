@@ -8,10 +8,8 @@ const AccountNavBar = () => {
    return (
       <>
          <div className="accountNavBar">
-            <div>
-               <Link to="/account">Twoje sprawy</Link>
-            </div>
-            <div>Przelew</div>
+            <Link to={"/account"}>Twoje sprawy</Link>
+            <Link to={"/account/transfer"}>Przelew</Link>
             <div>Historia transakcji</div>
             <Link to={"/account/exchange"}>Kantor</Link>
             <button onClick={() => setModalActive(true)}>Nowy rachunek</button>

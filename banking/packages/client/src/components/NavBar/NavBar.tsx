@@ -58,7 +58,13 @@ const NavBar = () => {
          <div className="navbar-right">
             {cookie.userId ? (
                <>
-                  <Link to={"/account"}>twoje konto</Link>
+                  <div>
+                     Witaj,{" "}
+                     <strong>
+                        <Link to={"/account"}>{cookie.username}</Link>
+                     </strong>
+                  </div>
+
                   <button
                      className="logout-btn"
                      onClick={() => {

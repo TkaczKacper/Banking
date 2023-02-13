@@ -5,7 +5,7 @@ import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import theme from "./theme";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { NavBar, LoginForm, RegisterForm, ToggleColorMode } from "./components";
-import { Account, Individual, BankCurrency } from "./container";
+import { Account, Individual, BankCurrency, MoneyTransfer } from "./container";
 import { CookiesProvider } from "react-cookie";
 
 const root = ReactDOM.createRoot(
@@ -25,6 +25,7 @@ root.render(
                   <Route path="/" element={<App />} />
                   <Route path="/account" element={<Account />} />
                   <Route path="/account/exchange" element={<BankCurrency />} />
+                  <Route path="/account/transfer" element={<MoneyTransfer />} />
                   <Route path="/individual" element={<Individual />} />
                   <Route path="/login" element={<LoginForm />} />
                   <Route path="/register" element={<RegisterForm />} />

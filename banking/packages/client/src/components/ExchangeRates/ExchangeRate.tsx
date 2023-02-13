@@ -49,6 +49,7 @@ const ExchangeRate = (props: props) => {
                   return <option value={index}>{keyName}</option>;
                })}
             </select>
+            <button type="submit">konwertuj</button>
          </form>
          <div id="result">{conversionResult}</div>
       </>
