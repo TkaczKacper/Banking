@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { AccountNavBar, RegisterForm } from "../../components";
+import { AccountNavBar } from "../../components";
 import "./account.css";
 
 const Account = () => {

@@ -1,2 +1,3 @@
 export { default as Individual } from "./individual/Individual";
 export { default as Account } from "./Account/Account";
+export { default as BankCurrency } from "./BankCurrency/BankCurrency";
