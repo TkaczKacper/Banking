@@ -6,6 +6,8 @@ const cors = require("cors");
 const session = require("express-session");
 const authRouter = require("./routers/authRouter");
 const accountRouter = require("./routers/accountRouter");
+const moneyRouter = require("./routers/moneyRouter");
+
 require("dotenv").config();
 
 const server = require("http").createServer(app);
@@ -41,6 +43,7 @@ app.use(
 
 app.use("/auth", authRouter);
 app.use("/account", accountRouter);
+app.use("/money", moneyRouter);
 
 app.get("/", (req, res) => {
    res.json("hi");

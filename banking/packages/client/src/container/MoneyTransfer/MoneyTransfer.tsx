@@ -48,6 +48,25 @@ const MoneyTransfer = () => {
                   const senderAccount = target.sender.value;
                   const amount = target.amount.value;
                   const receiverAccount = target.receiver.value;
+
+                  const valuesToFetch = {
+                     senderAccount: senderAccount,
+                     amount: amount,
+                     receiverAccount: receiverAccount,
+                  };
+
+                  fetch("http://192.168.1.100:5000/money/transfer", {
+                     method: "POST",
+                     credentials: "include",
+                     headers: {
+                        "Content-Type": "application/json",
+                     },
+                     body: JSON.stringify(valuesToFetch),
+                  })
+                     .then((res) => res.json())
+                     .then((data) => {
+                        console.log(data);
+                     });
                }}
             >
                Waluta
