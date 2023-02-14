@@ -41,20 +41,20 @@ const MoneyTransfer = () => {
                onSubmit={(e: React.SyntheticEvent) => {
                   e.preventDefault();
                   const target = e.target as typeof e.target & {
-                     sender: { value: number };
+                     sender: { value: string };
                      amount: { value: number };
                      receiver: { value: number };
                   };
-                  const senderAccount = target.sender.value;
+                  const senderAccount = target.sender.value.split(",", 2);
                   const amount = target.amount.value;
                   const receiverAccount = target.receiver.value;
-
                   const valuesToFetch = {
-                     senderAccount: senderAccount,
+                     userId: cookie.userId,
+                     senderAccount: senderAccount[0],
+                     currency: senderAccount[1],
                      amount: amount,
                      receiverAccount: receiverAccount,
                   };
-
                   fetch("http://192.168.1.100:5000/money/transfer", {
                      method: "POST",
                      credentials: "include",
@@ -75,7 +75,7 @@ const MoneyTransfer = () => {
                      return (
                         <option
                            key={item.accountnumber}
-                           value={item.accountnumber}
+                           value={[item.accountnumber, item.currency]}
                         >
                            {item.currency}
                         </option>
