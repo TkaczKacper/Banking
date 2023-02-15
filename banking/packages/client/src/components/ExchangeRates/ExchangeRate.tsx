@@ -29,14 +29,7 @@ export const GetExchangeRate = async (from: string, to: string) => {
 
 const ExchangeRate = () => {
    const avialableCurrencies = GetCurrencyData();
-
-   let conversionResult: number = 0;
-   console.log(avialableCurrencies);
-
-   function hideResult() {
-      let container = document.getElementById("result") as HTMLDivElement;
-      container.style.display = "none";
-   }
+   const [conversionResult, setConversionResult] = useState("");
 
    const onSubmit = async (e: React.SyntheticEvent) => {
       e.preventDefault();
@@ -48,19 +41,20 @@ const ExchangeRate = () => {
       const amount = target.amountInput.value;
       const from = target.fromCurrency.value;
       const to = target.toCurrency.value;
-      console.log(amount, from, to);
 
       const ratio: number = await GetExchangeRate(from, to);
       const exchangeResult = amount * ratio;
-
-      const container = document.getElementById("result") as HTMLDivElement;
-      container.style.display = "block";
-      container.innerHTML = exchangeResult.toFixed(2);
+      setConversionResult(exchangeResult.toFixed(2));
    };
    return (
       <>
-         <form onSubmit={onSubmit} onChange={hideResult}>
-            <input type="number" name="amountInput"></input>
+         <form onSubmit={onSubmit} onChange={() => setConversionResult("")}>
+            <input
+               type="number"
+               min="0.01"
+               step="0.01"
+               name="amountInput"
+            ></input>
             <select name="fromCurrency">
                {Object.keys(avialableCurrencies).map((keyName: any, index) => {
                   return (
@@ -82,7 +76,7 @@ const ExchangeRate = () => {
             </select>
             <button type="submit">konwertuj</button>
          </form>
-         <div id="result"></div>
+         <div id="result">{conversionResult}</div>
       </>
    );
 };
