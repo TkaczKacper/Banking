@@ -6,6 +6,9 @@ import { useState, useEffect, Dispatch } from "react";
 const MoneyTransfer = () => {
    const [cookie] = useCookies(["userId"]);
    const [accounts, setAccounts] = useState([]);
+   const container = document.getElementById(
+      "transfer-message"
+   ) as HTMLDivElement;
 
    const fetchData = async () => {
       return await fetch(`http://192.168.1.100:5000/account/${cookie.userId}`, {
@@ -38,6 +41,8 @@ const MoneyTransfer = () => {
          <AccountNavBar />
          <div>
             <form
+               id="transfer-form"
+               onChange={() => (container.innerHTML = "")}
                onSubmit={(e: React.SyntheticEvent) => {
                   e.preventDefault();
                   const target = e.target as typeof e.target & {
@@ -66,6 +71,18 @@ const MoneyTransfer = () => {
                      .then((res) => res.json())
                      .then((data) => {
                         console.log(data);
+                        container.style.visibility = "block";
+                        container.innerHTML = data.details;
+
+                        if (data.details === "sent") {
+                           const form = document.getElementById(
+                              "transfer-form"
+                           ) as HTMLFormElement;
+                           form.style.display = "none";
+                           setTimeout(() => {
+                              window.location.href = "/account";
+                           }, 1000);
+                        }
                      });
                }}
             >
@@ -91,8 +108,11 @@ const MoneyTransfer = () => {
                ></input>
                Odbiorca
                <input name="receiver" type="number" />
-               <button type="submit">submit</button>
+               <button type="submit" id="form-btn">
+                  submit
+               </button>
             </form>
+            <div id="transfer-message"></div>
          </div>
       </>
    );

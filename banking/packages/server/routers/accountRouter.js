@@ -6,7 +6,7 @@ router.get("/:id", async (req, res) => {
    console.log("get");
    console.log(req.params.id);
    const accounts = await pool.query(
-      "SELECT * FROM account WHERE ownerId = $1",
+      "SELECT * FROM account WHERE ownerId = $1 ORDER BY accountnumber",
       [req.params.id]
    );
    if (accounts) {
