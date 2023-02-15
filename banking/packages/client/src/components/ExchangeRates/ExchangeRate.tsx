@@ -1,57 +1,88 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./exchangeRate.css";
 
-type props = {
-   data: never[];
+export const GetCurrencyData = () => {
+   const [data, setData] = useState([]);
+
+   const fetchData = async () => {
+      await fetch("https://api.exchangerate.host/latest?base=pln")
+         .then((res) => res.json())
+         .then((result) => {
+            setData(result.rates);
+         });
+   };
+
+   useEffect(() => {
+      fetchData();
+   }, []);
+
+   return data;
 };
 
-const ExchangeRate = (props: props) => {
-   const [moneyAmount, setMoneyAmount] = useState(0);
-   const [currency, setCurrency] = useState(0);
-   let conversionResult: number = 0;
+export const GetExchangeRate = async (from: string, to: string) => {
+   return fetch(`https://api.exchangerate.host/convert?from=${from}&to=${to}`)
+      .then((res) => res.json())
+      .then((result) => {
+         return result.result;
+      });
+};
 
-   function showResult() {
-      const possibleValue = Object.values(props.data).at(currency);
-      if (possibleValue) conversionResult = moneyAmount / possibleValue;
-      let container = document.getElementById("result") as HTMLDivElement;
-      container.innerHTML = conversionResult.toFixed(2) + "PLN";
-      container.style.display = "block";
-   }
+const ExchangeRate = () => {
+   const avialableCurrencies = GetCurrencyData();
+
+   let conversionResult: number = 0;
+   console.log(avialableCurrencies);
 
    function hideResult() {
       let container = document.getElementById("result") as HTMLDivElement;
       container.style.display = "none";
    }
 
+   const onSubmit = async (e: React.SyntheticEvent) => {
+      e.preventDefault();
+      const target = e.target as typeof e.target & {
+         amountInput: { value: number };
+         fromCurrency: { value: string };
+         toCurrency: { value: string };
+      };
+      const amount = target.amountInput.value;
+      const from = target.fromCurrency.value;
+      const to = target.toCurrency.value;
+      console.log(amount, from, to);
+
+      const ratio: number = await GetExchangeRate(from, to);
+      const exchangeResult = amount * ratio;
+
+      const container = document.getElementById("result") as HTMLDivElement;
+      container.style.display = "block";
+      container.innerHTML = exchangeResult.toFixed(2);
+   };
    return (
       <>
-         <form
-            onSubmit={(e) => {
-               e.preventDefault();
-               showResult();
-            }}
-            onChange={hideResult}
-         >
-            <input
-               type="number"
-               name="amountInput"
-               onChange={(e) => {
-                  setMoneyAmount(Number(e.target.value));
-               }}
-            ></input>
-            <select
-               name="currency"
-               onChange={(e) => {
-                  setCurrency(Number(e.target.value));
-               }}
-            >
-               {Object.keys(props.data).map((keyName: any, index) => {
-                  return <option value={index}>{keyName}</option>;
+         <form onSubmit={onSubmit} onChange={hideResult}>
+            <input type="number" name="amountInput"></input>
+            <select name="fromCurrency">
+               {Object.keys(avialableCurrencies).map((keyName: any, index) => {
+                  return (
+                     <option value={keyName} key={index}>
+                        {keyName}
+                     </option>
+                  );
+               })}
+            </select>
+            convert to:
+            <select name="toCurrency">
+               {Object.keys(avialableCurrencies).map((keyName: any, index) => {
+                  return (
+                     <option value={keyName} key={index}>
+                        {keyName}
+                     </option>
+                  );
                })}
             </select>
             <button type="submit">konwertuj</button>
          </form>
-         <div id="result">{conversionResult}</div>
+         <div id="result"></div>
       </>
    );
 };

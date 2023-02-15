@@ -1,8 +1,8 @@
 import "./newAccountModal.css";
 import Modal from "react-modal";
-import { GetCurrencyData } from "../../container/BankCurrency/BankCurrency";
 import { useCookies } from "react-cookie";
 import { useState, useEffect } from "react";
+import { GetCurrencyData } from "../ExchangeRates/ExchangeRate";
 
 type props = {
    modalActive: boolean;
