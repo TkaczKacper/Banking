@@ -51,4 +51,20 @@ router.post("/new", async (req, res) => {
    }
 });
 
+router.get("/history/:id", async (req, res) => {
+   const userId = req.params.id;
+   const transactions = await pool.query(
+      "SELECT * FROM transactions WHERE senderuser=$1 or receiveruser=$1",
+      [userId]
+   );
+   if (transactions.rowCount > 0) {
+      res.json({
+         transactions: transactions.rows,
+         details: "transactions found",
+      });
+   } else {
+      res.json({ details: "not found" });
+   }
+});
+
 module.exports = router;
