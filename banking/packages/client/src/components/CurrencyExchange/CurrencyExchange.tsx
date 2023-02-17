@@ -2,6 +2,7 @@ import "./currencyExchange.css";
 import { GetExchangeRate } from "../ExchangeRates/ExchangeRate";
 import { useCookies } from "react-cookie";
 import { useState, useEffect } from "react";
+import { setTimeout } from "timers";
 
 const CurrencyExchange = () => {
    const [cookie] = useCookies(["userId"]);
@@ -46,6 +47,27 @@ const CurrencyExchange = () => {
       const amount = target.transactionAmount.value;
       if (from != to && amount) {
          console.log(from, to, amount);
+         const valuesToFetch = {
+            currencyFrom: from,
+            currencyTo: to,
+            amount: amount,
+            userId: cookie.userId,
+         };
+         fetch("http://192.168.1.100:5000/money/exchange", {
+            method: "POST",
+            credentials: "include",
+            headers: {
+               "Content-Type": "application/json",
+            },
+            body: JSON.stringify(valuesToFetch),
+         })
+            .then((res) => res.json())
+            .then((data) => {
+               setMessage(data.details);
+               if (data.status === "good") {
+                  window.location.href = "/account";
+               }
+            });
       } else {
          if (amount) {
             setMessage("waluty musza sie roznic");

@@ -1,7 +1,7 @@
 import { AccountNavBar } from "../../components";
 import "./moneyTransfer.css";
 import { useCookies } from "react-cookie";
-import { useState, useEffect, Dispatch } from "react";
+import { useState, useEffect } from "react";
 
 const MoneyTransfer = () => {
    const [cookie] = useCookies(["userId"]);
