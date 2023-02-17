@@ -42,7 +42,7 @@ router.post("/new", async (req, res) => {
    }
    if (accountAvailable) {
       await pool.query(
-         "INSERT INTO account(ownerid, currency, accountbalance) VALUES ($1, $2, 400)",
+         "INSERT INTO account(ownerid, currency, accountbalance) VALUES ($1, $2, 0)",
          [req.body.userId, req.body.currency]
       );
       res.json({ details: "konto zalozone" });
