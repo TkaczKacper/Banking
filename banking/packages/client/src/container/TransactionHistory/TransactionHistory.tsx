@@ -1,7 +1,13 @@
 import "./transactionHistory.css";
+import { AccountNavBar } from "../../components";
 
 const TransactionHistory = () => {
-   return <div>TransactionHistory</div>;
+   return (
+      <>
+         <AccountNavBar />
+         <div>TransactionHistory</div>
+      </>
+   );
 };
 
 export default TransactionHistory;

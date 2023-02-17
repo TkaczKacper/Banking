@@ -33,6 +33,10 @@ router.post("/transfer", async (req, res) => {
             Number(preBalance.rows[0].accountbalance) + transactionAmount;
       }
       if (senderBalance >= 0) {
+         const receiverId = await pool.query(
+            "SELECT ownerid FROM account WHERE accountnumber=$1",
+            [receiver]
+         );
          await pool.query(
             "UPDATE account SET accountbalance=$1 WHERE accountnumber=$2",
             [senderBalance, req.body.senderAccount]
@@ -40,6 +44,18 @@ router.post("/transfer", async (req, res) => {
          await pool.query(
             "UPDATE account SET accountbalance=$1 WHERE accountnumber=$2",
             [receiverBalance, req.body.receiverAccount]
+         );
+         await pool.query(
+            "INSERT INTO transactions(senderuser, receiveruser, senderaccount, receiveraccount, transactionamount, senderbalance, receiverbalance) VALUES ($1, $2, $3, $4, $5, $6, $7)",
+            [
+               req.body.userId,
+               receiverId.rows[0].ownerid,
+               sender,
+               receiver,
+               transactionAmount,
+               senderBalance,
+               receiverBalance,
+            ]
          );
          res.json({ details: "sent" });
       } else {
@@ -56,9 +72,11 @@ router.post("/exchange", async (req, res) => {
    const amount = Number(req.body.amount);
    const ownerid = req.body.userId;
    const userAccounts = await pool.query(
-      "SELECT accountbalance, currency FROM account WHERE (currency=$1 OR currency=$2) AND ownerid=$3",
+      "SELECT accountbalance, currency, accountnumber FROM account WHERE (currency=$1 OR currency=$2) AND ownerid=$3",
       [currencyFrom, currencyTo, ownerid]
    );
+   let fromAccountnumber;
+   let toAccountnumber;
    let fromCorrect = false;
    let toCorrect = false;
    let balanceFrom;
@@ -69,10 +87,12 @@ router.post("/exchange", async (req, res) => {
          Number(row.accountbalance) >= amount
       ) {
          fromCorrect = true;
+         fromAccountnumber = row.accountnumber;
          balanceFrom = Number(row.accountbalance);
       }
       if (row.currency === currencyTo) {
          toCorrect = true;
+         toAccountnumber = row.accountnumber;
          balanceTo = Number(row.accountbalance);
       }
    }
@@ -97,6 +117,18 @@ router.post("/exchange", async (req, res) => {
       await pool.query(
          "UPDATE account SET accountbalance=$1 WHERE ownerid=$2 AND currency=$3",
          [balanceToAfter, ownerid, currencyTo]
+      );
+      await pool.query(
+         "INSERT INTO transactions(senderuser, receiveruser, senderaccount, receiveraccount, transactionamount, senderbalance, receiverbalance) VALUES ($1, $2, $3, $4, $5, $6, $7)",
+         [
+            ownerid,
+            ownerid,
+            fromAccountnumber,
+            toAccountnumber,
+            amount,
+            balanceFromAfter,
+            balanceToAfter,
+         ]
       );
       res.json({ details: "przewalutowano!", status: "good" });
    } else {
