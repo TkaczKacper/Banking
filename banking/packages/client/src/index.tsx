@@ -4,7 +4,7 @@ import App from "./App";
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import theme from "./theme";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { NavBar, LoginForm, RegisterForm, ToggleColorMode } from "./components";
+import { NavBar, LoginForm, RegisterForm } from "./components";
 import {
    Account,
    Individual,
@@ -19,30 +19,24 @@ const root = ReactDOM.createRoot(
 );
 root.render(
    <React.StrictMode>
-      <ChakraProvider theme={theme}>
-         <BrowserRouter>
-            <CookiesProvider>
-               <ColorModeScript
-                  initialColorMode={theme.config.initialColorMode}
+      <BrowserRouter>
+         <CookiesProvider>
+            <NavBar />
+            <Routes>
+               <Route path="/" element={<App />} />
+               <Route path="/account" element={<Account />} />
+               <Route path="/account/exchange" element={<BankCurrency />} />
+               <Route path="/account/transfer" element={<MoneyTransfer />} />
+               <Route
+                  path="/account/history"
+                  element={<TransactionHistory />}
                />
-               <NavBar />
-               <ToggleColorMode />
-               <Routes>
-                  <Route path="/" element={<App />} />
-                  <Route path="/account" element={<Account />} />
-                  <Route path="/account/exchange" element={<BankCurrency />} />
-                  <Route path="/account/transfer" element={<MoneyTransfer />} />
-                  <Route
-                     path="/account/history"
-                     element={<TransactionHistory />}
-                  />
-                  <Route path="/individual" element={<Individual />} />
-                  <Route path="/login" element={<LoginForm />} />
-                  <Route path="/register" element={<RegisterForm />} />
-                  <Route path="*" element={<Navigate to="/" />} />
-               </Routes>
-            </CookiesProvider>
-         </BrowserRouter>
-      </ChakraProvider>
+               <Route path="/individual" element={<Individual />} />
+               <Route path="/login" element={<LoginForm />} />
+               <Route path="/register" element={<RegisterForm />} />
+               <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
+         </CookiesProvider>
+      </BrowserRouter>
    </React.StrictMode>
 );
