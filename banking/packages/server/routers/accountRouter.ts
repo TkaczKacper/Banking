@@ -1,10 +1,9 @@
-const express = require("express");
-const router = express.Router();
-const pool = require("../db");
+import express from "express";
+import pool from "../db";
 
-router.get("/:id", async (req, res) => {
-   console.log("get");
-   console.log(req.params.id);
+const accountRouter = express.Router();
+
+accountRouter.get("/:id", async (req, res) => {
    const accounts = await pool.query(
       "SELECT * FROM account WHERE ownerId = $1 ORDER BY accountnumber",
       [req.params.id]
@@ -16,19 +15,19 @@ router.get("/:id", async (req, res) => {
    }
 });
 
-router.get("/new/:id", async (req, res) => {
+accountRouter.get("/new/:id", async (req, res) => {
    const accountsCurrencies = await pool.query(
       "SELECT currency FROM account WHERE ownerId=$1",
       [req.params.id]
    );
    let accounts = [];
-   accountsCurrencies.rows.forEach((account) => {
+   accountsCurrencies.rows.forEach((account: { currency: string }) => {
       accounts.push(account.currency);
    });
    res.json({ accounts: accounts });
 });
 
-router.post("/new", async (req, res) => {
+accountRouter.post("/new", async (req, res) => {
    const accounts = await pool.query(
       "SELECT currency FROM account WHERE ownerid = $1",
       [req.body.userId]
@@ -51,7 +50,7 @@ router.post("/new", async (req, res) => {
    }
 });
 
-router.get("/history/:id", async (req, res) => {
+accountRouter.get("/history/:id", async (req, res) => {
    const userId = req.params.id;
    const transactions = await pool.query(
       "SELECT * FROM transactions WHERE senderuser=$1 or receiveruser=$1",
@@ -67,4 +66,4 @@ router.get("/history/:id", async (req, res) => {
    }
 });
 
-module.exports = router;
+export default accountRouter;

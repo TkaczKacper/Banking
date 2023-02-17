@@ -1,26 +1,27 @@
-const express = require("express");
-const router = express.Router();
-const pool = require("../db");
+import express from "express";
+import pool from "../db";
 
-router.post("/transfer", async (req, res) => {
+const moneyRouter = express.Router();
+
+moneyRouter.post("/transfer", async (req, res) => {
    const accountNumbers = await pool.query(
       "SELECT accountnumber, accountbalance FROM account WHERE ownerid != $1 AND currency = $2",
       [req.body.userId, req.body.currency]
    );
-   const accounts = [];
-   accountNumbers.rows.forEach((element) => {
+   const accounts: Array<number> = [];
+   accountNumbers.rows.forEach((element: { accountnumber: number }) => {
       accounts.push(element.accountnumber);
    });
    if (accounts.includes(Number(req.body.receiverAccount))) {
-      const transactionAmount = Number(req.body.amount);
-      const sender = req.body.senderAccount;
-      const receiver = req.body.receiverAccount;
+      const transactionAmount: number = Number(req.body.amount);
+      const sender: number = req.body.senderAccount;
+      const receiver: number = req.body.receiverAccount;
       const preBalance = await pool.query(
          "SELECT accountbalance, accountnumber FROM account WHERE currency=$1 AND accountnumber=$2 OR accountnumber=$3",
          [req.body.currency, receiver, sender]
       );
-      let senderBalance = 0;
-      let receiverBalance = 0;
+      let senderBalance: number = 0;
+      let receiverBalance: number = 0;
       if (preBalance.rows[0].accountnumber == sender) {
          senderBalance =
             Number(preBalance.rows[0].accountbalance) - transactionAmount;
@@ -66,21 +67,21 @@ router.post("/transfer", async (req, res) => {
    }
 });
 
-router.post("/exchange", async (req, res) => {
-   const currencyFrom = req.body.currencyFrom;
-   const currencyTo = req.body.currencyTo;
-   const amount = Number(req.body.amount);
-   const ownerid = req.body.userId;
+moneyRouter.post("/exchange", async (req, res) => {
+   const currencyFrom: string = req.body.currencyFrom;
+   const currencyTo: string = req.body.currencyTo;
+   const amount: number = Number(req.body.amount);
+   const ownerid: number = req.body.userId;
    const userAccounts = await pool.query(
       "SELECT accountbalance, currency, accountnumber FROM account WHERE (currency=$1 OR currency=$2) AND ownerid=$3",
       [currencyFrom, currencyTo, ownerid]
    );
-   let fromAccountnumber;
-   let toAccountnumber;
+   let fromAccountnumber: number;
+   let toAccountnumber: number;
    let fromCorrect = false;
    let toCorrect = false;
-   let balanceFrom;
-   let balanceTo;
+   let balanceFrom: number;
+   let balanceTo: number;
    for (const row of userAccounts.rows) {
       if (
          row.currency === currencyFrom &&
@@ -96,7 +97,6 @@ router.post("/exchange", async (req, res) => {
          balanceTo = Number(row.accountbalance);
       }
    }
-   console.log(balanceFrom, amount, fromCorrect, toCorrect);
    if (fromCorrect && toCorrect) {
       const currentRate = await fetch(
          `https://api.exchangerate.host/convert?from=${currencyFrom}&to=${currencyTo}`
@@ -106,10 +106,8 @@ router.post("/exchange", async (req, res) => {
             return result.result;
          });
       const result = Number((currentRate * amount).toFixed(2));
-      console.log(balanceFrom, balanceTo, result);
       const balanceFromAfter = balanceFrom - amount;
       const balanceToAfter = balanceTo + result;
-      console.log(balanceFromAfter, balanceToAfter);
       await pool.query(
          "UPDATE account SET accountbalance=$1 WHERE ownerid=$2 AND currency=$3",
          [balanceFromAfter, ownerid, currencyFrom]
@@ -136,4 +134,4 @@ router.post("/exchange", async (req, res) => {
    }
 });
 
-module.exports = router;
+export default moneyRouter;

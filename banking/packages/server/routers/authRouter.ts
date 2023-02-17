@@ -1,8 +1,9 @@
-const express = require("express");
-const router = express.Router();
-const pool = require("../db");
-const yup = require("yup");
-const bcrypt = require("bcrypt");
+import express from "express";
+import pool from "../db";
+import * as yup from "yup";
+import bcrypt from "bcrypt";
+
+const authRouter = express.Router();
 
 const formDataLoginSchema = yup.object({
    username: yup
@@ -43,7 +44,7 @@ const formDataRegisterSchema = yup.object({
       .oneOf([yup.ref("password"), null], "Password must match."),
 });
 
-router.post("/login", async (req, res) => {
+authRouter.post("/login", async (req, res) => {
    const formData = req.body;
    const loginData = await pool.query(
       `SELECT id, username, password FROM users u WHERE u.username='${req.body.username}'`
@@ -87,7 +88,7 @@ router.post("/login", async (req, res) => {
    }
 });
 
-router.post("/register", async (req, res) => {
+authRouter.post("/register", async (req, res) => {
    const formData = req.body;
    const existingUser = await pool.query(
       "SELECT username FROM users WHERE username=$1",
@@ -118,13 +119,11 @@ router.post("/register", async (req, res) => {
       }
    } else {
       if (existingUser.rowCount === 1) {
-         console.log("username taken");
          res.json({ loggedIn: false, content: "Username taken" });
       } else if (existingEmail.rowCount === 1) {
-         console.log("email taken");
          res.json({ loggedIn: false, content: "Email address taken." });
       }
    }
 });
 
-module.exports = router;
+export default authRouter;
