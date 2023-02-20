@@ -1,52 +1,95 @@
 .individual-page-container {
-   margin-top: 20px;
-   display: flex;
    width: 100%;
-   justify-content: center;
+   min-width: 400px;
+   max-width: 1440px;
+   display: flex;
+   margin-left: auto;
+   margin-right: auto;
+   flex-direction: column-reverse;
+   align-items: center;
+   margin-top: 20px;
+   background-color: rgb(223, 222, 222);
    margin-bottom: -50px;
 }
-.container {
-   background-color: rgb(223, 222, 222);
-   display: flex;
-   max-width: 1200px;
-   justify-content: center;
-   flex-wrap: wrap;
-   width: 100%;
-}
 .page-text-container {
-   width: 50%;
-   color: black;
+   width: 90%;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
 }
 .page-image-container {
    width: 30%;
-   margin-top: auto;
-   margin-bottom: auto;
-}
-.page-image {
-   width: fit-content;
+   margin-top: 20px;
 }
 .text-h1 {
-   margin-top: 50px;
+   text-align: center;
+   margin-top: 25px;
    font-size: 55px;
    font-weight: 500;
+   margin-bottom: 10px;
 }
 .text-normal {
-   margin: 20px;
-   font-size: 25px;
-}
-.text-h2 {
+   margin-top: 15px;
    margin-bottom: 10px;
+   text-align: center;
    font-size: 35px;
 }
+.text-h2 {
+   margin-top: 10px;
+   margin-bottom: 10px;
+   font-size: 40px;
+}
 .text-ul {
-   font-size: large;
+   display: block;
+   font-size: 20px;
+}
+ul {
+   list-style: none;
+}
+ul li:before {
+   content: "\2022";
+   color: red;
+   width: 1em;
+   display: inline-block;
+   font-weight: 900;
+   margin-left: -1em;
 }
 #register-individual {
-   margin: 25px;
+   margin-left: 24px;
+   margin-top: 10px;
+   margin-bottom: 10px;
+   font-size: larger;
+   border: 1px solid darkred;
 }
 .text-link {
    margin-bottom: 20px;
-   font-size: medium;
+   font-size: large;
    font-weight: 600;
    color: rgb(188, 8, 8);
+}
+@media only screen and (min-width: 1024px) {
+   .individual-page-container {
+      flex-direction: row;
+   }
+   .page-text-container {
+      width: 45%;
+      margin-left: 5%;
+   }
+   .page-image-container {
+      display: flex;
+      justify-content: center;
+      width: 50%;
+   }
+   .page-image {
+      width: 80%;
+   }
+   .text-h1 {
+      font-size: 65px;
+   }
+   .text-h2 {
+      font-size: 50px;
+   }
+   .text-ul {
+      font-size: 23px;
+   }
 }
