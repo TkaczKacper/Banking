@@ -119,7 +119,7 @@
       justify-content: flex-end;
    }
    .navbar-right-logged {
-      width: 30%;
+      width: 60%;
       justify-content: flex-end;
    }
    #logout-btn {
@@ -133,15 +133,17 @@
 @media only screen and (min-width: 1024px) {
    .navbar-left {
       display: flex;
+      height: 100%;
    }
    .nav-link {
-      display: block;
+      display: flex;
    }
    .navbar-menu {
       display: none;
    }
-   .nav-logo {
+   .nav-logo-left {
       height: 100%;
+      margin-right: 20px;
    }
    .nav-link {
       text-decoration: none;
@@ -168,6 +170,13 @@
       width: fit-content;
       justify-content: flex-end;
    }
+   .navbar-right-logged {
+      width: 30%;
+      justify-content: flex-end;
+   }
+   #logout-btn {
+      margin-right: 5%;
+   }
 }
 @media only screen and (min-width: 1440px) {
    .navbar {
@@ -177,6 +186,7 @@
    }
    .nav-logo-left {
       margin-left: 0;
+      margin-right: 0;
       height: auto;
       margin-bottom: -3%;
    }

@@ -1,12 +1,56 @@
 .accountNavBar {
    display: flex;
-   height: 40px;
+   flex-direction: column;
+   max-width: 1440px;
    width: 100%;
-   justify-content: space-evenly;
+   min-width: 400px;
+   margin-left: auto;
+   margin-right: auto;
+   margin-bottom: 30px;
 }
-.modalButton {
-   border: 1px solid black;
+.account-nav-menu {
+   width: 100%;
+   display: flex;
+   position: relative;
+   flex-direction: column;
+   align-items: center;
+   font-size: 30px;
+}
+#nav-links-container {
+   display: none;
+   flex-direction: column;
+   margin-left: -3%;
+   width: 103%;
+   font-size: 30px;
+}
+.account-nav-link {
+   background-color: lightgray;
+   width: 100%;
+   text-decoration: none;
    color: black;
-   border-radius: 50%;
-   padding: 10px;
+   text-align: center;
+   padding-bottom: 5px;
+}
+.account-nav-link:hover {
+   background-color: rgb(187, 187, 187);
+}
+#hide {
+   display: none;
+}
+
+@media only screen and (min-width: 768px) {
+   .account-nav-menu {
+      display: none;
+   }
+   #nav-links-container {
+      display: flex;
+      width: 100%;
+      flex-direction: row;
+      margin-left: auto;
+      margin-right: auto;
+      align-items: center;
+   }
+   .account-nav-link {
+      background-color: white;
+   }
 }
