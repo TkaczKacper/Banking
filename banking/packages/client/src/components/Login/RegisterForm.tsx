@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./loginForm.css";
 import { Formik, FormikErrors } from "formik";
 import { useCookies } from "react-cookie";
@@ -18,41 +18,57 @@ const RegisterForm = () => {
       password: "",
       password_conf: "",
    };
+   const [disabled, setDisabled] = useState(true);
    const [cookie, setCookie] = useCookies(["isLogged", "userId", "username"]);
-   let registerResult: string = "";
+   const [validationError, setValidationError] = useState("");
+   useEffect(() => {
+      if (validationError.length > 0) {
+         setDisabled(true);
+      }
+   }, [validationError]);
    return (
       <>
          {cookie.userId ? (
             <Navigate to="/" />
          ) : (
-            <div className="form-container register-form">
+            <div className="form-container">
                <Formik
                   initialValues={initialValues}
                   validate={(values) => {
                      let errors: FormikErrors<FormValues> = {};
                      if (!values.username) {
-                        errors.username = "Username required";
+                        errors.username = "Pole wymagane";
                      } else if (values.username.length < 6) {
-                        errors.username = "Username too short!";
+                        errors.username = "Nazwa użytkownika zbyt krótka!";
                      } else if (values.username.length > 20) {
-                        errors.username = "Username too long!";
+                        errors.username = "Nazwa użytkownika zbyt długa!";
                      }
                      if (
                         !/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/i.test(
                            values.email
                         )
                      ) {
-                        errors.email = "Invalid email";
+                        errors.email = "Nieprawidłowy adres email.";
                      }
                      if (
                         !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[a-zA-Z\d@$!%*?&]{8,}$/i.test(
                            values.password
                         )
                      ) {
-                        errors.password = "Weak password";
+                        errors.password = "Hasło nie spełnia wymogów.";
                      }
                      if (values.password_conf != values.password) {
-                        errors.password_conf = "Password must be identical";
+                        errors.password_conf = "Hasła nie mogą się różnić.";
+                     }
+                     if (
+                        !errors.username &&
+                        !errors.email &&
+                        !errors.password &&
+                        !errors.password_conf
+                     ) {
+                        setDisabled(false);
+                     } else {
+                        setDisabled(true);
                      }
                      return errors;
                   }}
@@ -79,8 +95,7 @@ const RegisterForm = () => {
                         })
                         .then((data) => {
                            if (data) {
-                              console.log(data);
-                              registerResult = data.content;
+                              setValidationError(data.content);
                               if (data.content === "Registered") {
                                  setCookie("isLogged", true, { path: "/" });
                                  setCookie("userId", data.details.userId, {
@@ -102,13 +117,13 @@ const RegisterForm = () => {
                      handleChange,
                      handleBlur,
                      handleSubmit,
-                     isSubmitting,
                   }) => (
                      <form
                         className="login-form"
+                        id="register-form"
                         onSubmit={handleSubmit}
                         onChange={() => {
-                           registerResult = "";
+                           setValidationError("");
                         }}
                      >
                         <input
@@ -151,13 +166,14 @@ const RegisterForm = () => {
                         {errors.password_conf &&
                            touched.password_conf &&
                            errors.password_conf}
-                        {!errors.password_conf && registerResult}
+                        {!errors.password_conf && validationError}
                         <button
                            className="form-button"
+                           id="register-button"
                            type="submit"
-                           disabled={isSubmitting}
+                           disabled={disabled}
                         >
-                           Register
+                           Załóż konto
                         </button>
                      </form>
                   )}

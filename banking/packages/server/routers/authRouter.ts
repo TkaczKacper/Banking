@@ -55,7 +55,7 @@ authRouter.post("/login", async (req, res) => {
          .catch((err) => {
             res.json({
                loggedIn: false,
-               status: "invalid credentials",
+               status: "Nieprawidłowe dane logowania.",
             });
             console.log(err.errors);
          })
@@ -76,7 +76,7 @@ authRouter.post("/login", async (req, res) => {
                      } else {
                         res.json({
                            loggedIn: false,
-                           status: "invalid credentials",
+                           status: "Nieprawidłowe dane logowania.",
                         });
                      }
                   })
@@ -84,7 +84,7 @@ authRouter.post("/login", async (req, res) => {
             }
          });
    } else {
-      res.json({ loggedIn: false, status: "invalid credentials" });
+      res.json({ loggedIn: false, status: "Nieprawidłowe dane logowania." });
    }
 });
 
@@ -119,9 +119,9 @@ authRouter.post("/register", async (req, res) => {
       }
    } else {
       if (existingUser.rowCount === 1) {
-         res.json({ loggedIn: false, content: "Username taken" });
+         res.json({ loggedIn: false, content: "Nazwa użytkownika zajęta." });
       } else if (existingEmail.rowCount === 1) {
-         res.json({ loggedIn: false, content: "Email address taken." });
+         res.json({ loggedIn: false, content: "Adres email zajęty." });
       }
    }
 });

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./loginForm.css";
 import { Formik, FormikErrors } from "formik";
 import { useCookies } from "react-cookie";
@@ -11,9 +11,15 @@ interface FormValues {
 
 const LoginForm = () => {
    const [cookie, setCookie] = useCookies(["isLogged", "userId", "username"]);
-   console.log(cookie);
+   const [disabled, setDisabled] = useState(true);
+   const [validationError, setValidationError] = useState("");
    const initialValues: FormValues = { username: "", password: "" };
-   let validationError: string = "";
+   useEffect(() => {
+      if (validationError.length > 0) {
+         setDisabled(true);
+      }
+   }, [validationError]);
+
    return (
       <>
          {cookie.userId ? (
@@ -25,14 +31,19 @@ const LoginForm = () => {
                   validate={(values) => {
                      let errors: FormikErrors<FormValues> = {};
                      if (!values.username) {
-                        errors.username = "Username required";
+                        errors.username = "Pole wymagane!";
                      } else if (values.username.length < 6) {
-                        errors.username = "Username too short!";
+                        errors.username = "Nazwa użytkownika zbyt krótka!";
                      } else if (values.username.length > 20) {
-                        errors.username = "Username too long!";
+                        errors.username = "Nazwa użytkowniak zbyt długa!";
                      }
                      if (!values.password) {
-                        errors.password = "Password required";
+                        errors.password = "Pole wymagane!";
+                     }
+                     if (!errors.password && !errors.username) {
+                        setDisabled(false);
+                     } else {
+                        setDisabled(true);
                      }
                      return errors;
                   }}
@@ -71,7 +82,7 @@ const LoginForm = () => {
                               });
                               window.location.href = "/account";
                            }
-                           return (validationError = data.status);
+                           return setValidationError(data.status);
                         });
                   }}
                >
@@ -82,19 +93,18 @@ const LoginForm = () => {
                      handleChange,
                      handleBlur,
                      handleSubmit,
-                     isSubmitting,
                   }) => (
                      <form
                         className="login-form"
                         onSubmit={handleSubmit}
                         onChange={() => {
-                           validationError = "";
+                           setValidationError("");
                         }}
                      >
                         <input
                            type="username"
                            name="username"
-                           placeholder="username"
+                           placeholder="nazwa użytkownika"
                            onChange={handleChange}
                            onBlur={handleBlur}
                            value={values.username}
@@ -104,7 +114,7 @@ const LoginForm = () => {
                         <input
                            type="password"
                            name="password"
-                           placeholder="password"
+                           placeholder="hasło"
                            onChange={handleChange}
                            onBlur={handleBlur}
                            value={values.password}
@@ -114,9 +124,9 @@ const LoginForm = () => {
                         <button
                            className="form-button"
                            type="submit"
-                           disabled={isSubmitting}
+                           disabled={disabled}
                         >
-                           Login
+                           Zaloguj
                         </button>
                      </form>
                   )}
