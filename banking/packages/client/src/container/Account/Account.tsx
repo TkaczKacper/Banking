@@ -36,21 +36,31 @@ const Account = () => {
       <>
          <AccountNavBar />
          {accounts.length >= 1 ? (
-            <table>
+            <table className="account-table">
                <thead>
                   <tr>
-                     <th>numer konta</th>
-                     <th>stan konta</th>
-                     <th>waluta</th>
+                     <th />
+                     <th className="th-item" id="th-number">
+                        numer konta
+                     </th>
+                     <th className="th-item" id="th-balance">
+                        stan konta
+                     </th>
                   </tr>
                </thead>
-               <tbody>
-                  {accounts.map((item: any) => {
+               <tbody className="account-table-body">
+                  {accounts.map((item: any, index) => {
                      return (
-                        <tr key={item.accountnumber}>
-                           <td>{item.accountnumber}</td>
-                           <td>{item.accountbalance}</td>
-                           <td>{item.currency}</td>
+                        <tr key={item.accountnumber} className="tbody-row">
+                           <td className="tb-item" id="tb-id">
+                              {index + 1}.
+                           </td>
+                           <td className="tb-item" id="tb-number">
+                              {item.accountnumber}
+                           </td>
+                           <td className="tb-item" id="tb-balance">
+                              {item.currency} {item.accountbalance}
+                           </td>
                         </tr>
                      );
                   })}
