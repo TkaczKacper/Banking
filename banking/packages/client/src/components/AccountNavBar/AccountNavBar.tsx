@@ -5,7 +5,6 @@ import NewAccountModal from "../NewAccountModal/NewAccountModal";
 
 const AccountNavBar = () => {
    const [modalActive, setModalActive] = useState(false);
-   const [open, setOpen] = useState(["show", "hide"]);
    const openMenu = () => {
       const divsShown = document.getElementById("show") as HTMLDivElement;
       const divsHiden = document.getElementById("hide") as HTMLDivElement;
@@ -21,11 +20,15 @@ const AccountNavBar = () => {
    return (
       <>
          <div className="accountNavBar">
-            <div className="account-nav-menu" onClick={openMenu}>
-               <div className="nav-menu-opener" id={open[0]}>
+            <div
+               className="account-nav-menu"
+               id="account-nav-menu"
+               onClick={openMenu}
+            >
+               <div className="nav-menu-opener" id="show">
                   ⋁ twoje sprawy ⋁
                </div>
-               <div className="nav-menu-opener" id={open[1]}>
+               <div className="nav-menu-opener" id="hide">
                   ⋀ ⋀ ⋀ ⋀ ⋀ ⋀
                </div>
             </div>

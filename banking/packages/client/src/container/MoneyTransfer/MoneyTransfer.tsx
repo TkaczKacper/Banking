@@ -86,33 +86,48 @@ const MoneyTransfer = () => {
                      });
                }}
             >
-               Waluta
-               <select name="sender">
-                  {accounts.map((item: any) => {
-                     return (
-                        <option
-                           key={item.accountnumber}
-                           value={[item.accountnumber, item.currency]}
-                        >
-                           {item.currency}
-                        </option>
-                     );
-                  })}
-               </select>
-               Kwota
-               <input
-                  name="amount"
-                  type="number"
-                  min="0.01"
-                  step="0.01"
-               ></input>
-               Odbiorca
-               <input name="receiver" type="number" />
+               <div className="currency-container">
+                  <label id="select-label">Waluta: </label>
+                  <div className="select-container">
+                     <select name="sender" id="currency-input">
+                        {accounts.map((item: any) => {
+                           return (
+                              <option
+                                 key={item.accountnumber}
+                                 value={[item.accountnumber, item.currency]}
+                              >
+                                 {item.currency}
+                              </option>
+                           );
+                        })}
+                     </select>
+                  </div>
+               </div>
+               <div className="transfer-amount-container">
+                  <label id="amount-label">Kwota: </label>
+                  <input
+                     id="amount-input"
+                     name="amount"
+                     type="number"
+                     min="0.01"
+                     step="0.01"
+                     placeholder="wprowadz ilosc..."
+                  ></input>
+               </div>
+               <div className="reciever-container">
+                  <label id="receiver-label">Odbiorca: </label>
+                  <input
+                     id="receiver-input"
+                     name="receiver"
+                     type="number"
+                     placeholder="numer konta odbiorcy"
+                  />
+               </div>
+               <div id="transfer-message"></div>
                <button type="submit" id="form-btn">
                   submit
                </button>
             </form>
-            <div id="transfer-message"></div>
          </div>
       </>
    );

@@ -13,6 +13,7 @@ th {
    background-color: lightblue;
    border-bottom: 1px black solid;
    border-collapse: collapse;
+   padding: 10px;
 }
 td {
    border-bottom: 1px solid black;
