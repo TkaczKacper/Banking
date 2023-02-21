@@ -19,21 +19,6 @@ const NavBar = () => {
    };
    return (
       <div className="navbar">
-         <div className="navbar-menu" onClick={() => showMenu()}>
-            <div id="menu" />
-            <div id="menu" />
-            <div id="menu" />
-            <div id="navbar-dropdown">
-               <a href="/individual">klienci indywidualni</a>
-               <a href="https://www.mbank.pl/private-banking/">
-                  private banking
-               </a>
-               <a href="https://www.mbank.pl/firmy/">firmy</a>
-               <a href="https://www.mbank.pl/msp-korporacje/">
-                  msp i korporacje
-               </a>
-            </div>
-         </div>
          <div className="navbar-left">
             {cookie.userId ? (
                <Link to={"/"} className="navbar-logo">
@@ -77,13 +62,30 @@ const NavBar = () => {
                msp i korporacje
             </a>
          </div>
+         <div className="navbar-menu" onClick={() => showMenu()}>
+            <div id="menu" />
+            <div id="menu" />
+            <div id="menu" />
+            <div id="navbar-dropdown">
+               <a href="/individual">klienci indywidualni</a>
+               <a href="https://www.mbank.pl/private-banking/">
+                  private banking
+               </a>
+               <a href="https://www.mbank.pl/firmy/">firmy</a>
+               <a href="https://www.mbank.pl/msp-korporacje/">
+                  msp i korporacje
+               </a>
+            </div>
+         </div>
          <>
             {cookie.userId ? (
                <div className="navbar-right-logged">
                   <div id="user-profile">
                      Witaj,{" "}
                      <strong>
-                        <Link to={"/account"}>{cookie.username}</Link>
+                        <Link to={"/account"} id="profile-link">
+                           {cookie.username}
+                        </Link>
                      </strong>
                   </div>
                   <button
