@@ -47,7 +47,10 @@ const AccountNavBar = () => {
                </Link>
                <a
                   className="account-nav-link"
-                  onClick={() => setModalActive(true)}
+                  onClick={() => {
+                     setModalActive(true);
+                     openMenu();
+                  }}
                >
                   Nowy rachunek
                </a>

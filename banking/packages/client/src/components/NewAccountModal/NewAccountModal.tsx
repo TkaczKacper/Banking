@@ -1,7 +1,7 @@
 import "./newAccountModal.css";
 import Modal from "react-modal";
 import { useCookies } from "react-cookie";
-import { useState, useEffect } from "react";
+import { useState, useEffect, FocusEvent } from "react";
 import { GetCurrencyData } from "../ExchangeRates/ExchangeRate";
 
 type props = {
@@ -36,14 +36,30 @@ const NewAccountModal = (props: props) => {
       props.setModalActive(false);
    }
 
+   const onFocusHandler = () => {
+      const select = document.getElementById(
+         "modal-currency-input"
+      ) as HTMLSelectElement;
+      select.size = 6;
+   };
+   const blurHandler = () => {
+      const select = document.getElementById(
+         "modal-currency-input"
+      ) as HTMLSelectElement;
+      select.size = 1;
+   };
    return (
       <Modal
          isOpen={props.modalActive}
          onRequestClose={closeModal}
          ariaHideApp={false}
+         className="new-acc-modal"
       >
-         <button onClick={closeModal}>click</button>
+         <button onClick={closeModal} id="close-modal-button">
+            X
+         </button>
          <form
+            className="new-account-form"
             onSubmit={(e: React.SyntheticEvent) => {
                e.preventDefault();
                const target = e.target as typeof e.target & {
@@ -77,20 +93,36 @@ const NewAccountModal = (props: props) => {
                      const container = document.getElementById(
                         "error"
                      ) as HTMLDivElement;
-                     container.innerHTML = data.details;
+                     if (data.details === "konto zalozone") {
+                        closeModal();
+                        window.location.href = "/account";
+                     } else {
+                        container.innerHTML = data.details;
+                     }
                   });
             }}
          >
-            <select name="currency">
-               {Object.keys(data).map((keyName: string, index) => {
-                  if (!userAccounts.includes(keyName))
-                     return (
-                        <option key={index} value={keyName}>
-                           {keyName}
-                        </option>
-                     );
-               })}
-            </select>
+            <div className="currency-field">
+               <label className="currency-label">Wybierz walutę</label>
+               <div className="modal-select-container">
+                  <select
+                     id="modal-currency-input"
+                     name="currency"
+                     onFocus={onFocusHandler}
+                     onBlur={blurHandler}
+                     onChange={blurHandler}
+                  >
+                     {Object.keys(data).map((keyName: string, index) => {
+                        if (!userAccounts.includes(keyName))
+                           return (
+                              <option key={index} value={keyName}>
+                                 {keyName}
+                              </option>
+                           );
+                     })}
+                  </select>
+               </div>
+            </div>
             <button type="submit" id="open-account-btn">
                otworz rachunek
             </button>

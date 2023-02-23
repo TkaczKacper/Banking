@@ -1,6 +1,75 @@
-#open-account-btn {
+.new-acc-modal {
+   position: absolute;
+   top: 20%;
+   margin: auto;
+   bottom: 35%;
+   left: 10%;
+   right: 10%;
    border: 1px solid black;
    border-radius: 10px;
+   background-color: rgb(231, 223, 223);
+   height: fit-content;
+   padding: 40px;
+}
+.new-account-form {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+#close-modal-button {
+   position: absolute;
+   right: 10px;
+   top: 10px;
+   border: none;
+   background-color: none;
+   font-size: 15px;
+   border-radius: 100%;
+}
+.currency-field {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+.currency-label {
+   text-align: center;
+}
+.modal-select-container {
+   width: 100%;
+   position: relative;
+   margin: 20px auto;
+}
+#modal-currency-input {
+   width: 100%;
+   text-align: center;
+   padding: 5px 15px;
+   cursor: pointer;
+   font-size: 30px;
+   border: 1px solid black;
+   border-radius: 20px;
+}
+#open-account-btn {
+   border: 1px solid black;
+   border-radius: 15px;
+   font-size: 18px;
    color: black;
-   padding: 3px;
+   padding: 6px;
+   background-color: rgb(172, 245, 153);
+}
+@media only screen and (min-width: 768px) {
+   .new-acc-modal {
+      right: 20%;
+      left: 20%;
+   }
+}
+@media only screen and (min-width: 1024px) {
+   .new-acc-modal {
+      right: 25%;
+      left: 25%;
+   }
+}
+@media only screen and (min-width: 1440px) {
+   .new-acc-modal {
+      right: 30%;
+      left: 30%;
+   }
 }
