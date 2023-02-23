@@ -1,14 +1,14 @@
 import "./currencyExchange.css";
-import { GetExchangeRate } from "../ExchangeRates/ExchangeRate";
 import { useCookies } from "react-cookie";
 import { useState, useEffect } from "react";
-import { setTimeout } from "timers";
+import { on } from "events";
 
 const CurrencyExchange = () => {
    const [cookie] = useCookies(["userId"]);
    if (!cookie.userId) window.location.href = "/login";
    const [accounts, setAccounts] = useState([]);
    const [message, setMessage] = useState("");
+   const [size, setSize] = useState([1, 1]);
 
    const fetchData = async () => {
       return await fetch(`http://192.168.1.100:5000/account/${cookie.userId}`, {
@@ -71,43 +71,88 @@ const CurrencyExchange = () => {
             });
       } else {
          if (amount) {
-            setMessage("waluty musza sie roznic");
+            setMessage("waluty muszą się różnić");
          } else {
-            setMessage("wprowadz ilosc");
+            setMessage("wprowadź ilość");
          }
       }
    };
+
    return (
-      <div>
-         CurrencyExchange
-         <form onSubmit={submitHandler} onChange={() => setMessage("")}>
-            <select name="fromCurrency">
-               {accounts.map((item: any) => {
-                  return (
-                     <option key={item.accountnumber} value={item.currency}>
-                        {item.currency}
-                     </option>
-                  );
-               })}
-            </select>
-            <input
-               name="transactionAmount"
-               type="number"
-               min="0.01"
-               step="0.01"
-            />
-            <select name="toCurrency">
-               {accounts.map((item: any) => {
-                  return (
-                     <option key={item.accountnumber} value={item.currency}>
-                        {item.currency}
-                     </option>
-                  );
-               })}
-            </select>
-            <button type="submit">przewalutuj</button>
+      <div className="exchange-container">
+         <form
+            className="exchange-form"
+            onSubmit={submitHandler}
+            onChange={() => setMessage("")}
+         >
+            <div className="form-cantor-currency-from">
+               <label className="form-label" id="exchange-label-from">
+                  Sprzedajesz
+               </label>
+               <select
+                  name="fromCurrency"
+                  className="form-select"
+                  id="input-from"
+                  size={size[0]}
+                  onFocus={() => setSize([4, 1])}
+                  onBlur={() => setSize([1, 1])}
+                  onChange={() => setSize([1, 1])}
+               >
+                  {accounts.map((item: any) => {
+                     return (
+                        <option key={item.accountnumber} value={item.currency}>
+                           {item.currency}
+                        </option>
+                     );
+                  })}
+               </select>
+            </div>
+            <div className="form-cantor-currency-to">
+               <label className="form-label" id="exchange-label-to">
+                  Kupujesz
+               </label>
+               <select
+                  name="toCurrency"
+                  className="form-select"
+                  id="input-to"
+                  size={size[1]}
+                  onFocus={() => setSize([1, 4])}
+                  onBlur={() => setSize([1, 1])}
+                  onChange={() => setSize([1, 1])}
+               >
+                  {accounts.map((item: any) => {
+                     return (
+                        <option key={item.accountnumber} value={item.currency}>
+                           {item.currency}
+                        </option>
+                     );
+                  })}
+               </select>
+            </div>
+            <div className="form-cantor-amount">
+               <label className="form-label" id="exchange-label-amount">
+                  Ilość
+               </label>
+               <input
+                  className="form-cantor-input"
+                  id="input-amount"
+                  name="transactionAmount"
+                  type="number"
+                  min="0.01"
+                  step="0.01"
+               />
+            </div>
+            <button
+               className="form-cantor-button"
+               id="form-exchange-button"
+               type="submit"
+            >
+               przewalutuj
+            </button>
          </form>
-         <div id="error">{message}</div>
+         <div className="cantor-error" id="error">
+            {message}
+         </div>
       </div>
    );
 };

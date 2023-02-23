@@ -61,7 +61,7 @@ moneyRouter.post("/transfer", async (req, res) => {
             );
             res.json({ details: "sent" });
          } else {
-            res.json({ details: "nie masz wystarczajaco srodkow" });
+            res.json({ details: "nie masz wystarczająco środkow" });
          }
       } else {
          res.json({ details: "zły numer konta" });

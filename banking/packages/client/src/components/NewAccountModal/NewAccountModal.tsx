@@ -13,7 +13,7 @@ const NewAccountModal = (props: props) => {
    const data = GetCurrencyData();
    const [cookie] = useCookies(["userId"]);
    const [userAccounts, setUserAccounts] = useState([""]);
-
+   const [size, setSize] = useState(1);
    const fetchData = async () => {
       fetch(`http://192.168.1.100:5000/account/new/${cookie.userId}`, {
          method: "GET",
@@ -36,18 +36,6 @@ const NewAccountModal = (props: props) => {
       props.setModalActive(false);
    }
 
-   const onFocusHandler = () => {
-      const select = document.getElementById(
-         "modal-currency-input"
-      ) as HTMLSelectElement;
-      select.size = 6;
-   };
-   const blurHandler = () => {
-      const select = document.getElementById(
-         "modal-currency-input"
-      ) as HTMLSelectElement;
-      select.size = 1;
-   };
    return (
       <Modal
          isOpen={props.modalActive}
@@ -108,9 +96,10 @@ const NewAccountModal = (props: props) => {
                   <select
                      id="modal-currency-input"
                      name="currency"
-                     onFocus={onFocusHandler}
-                     onBlur={blurHandler}
-                     onChange={blurHandler}
+                     size={size}
+                     onFocus={() => setSize(5)}
+                     onBlur={() => setSize(1)}
+                     onChange={() => setSize(1)}
                   >
                      {Object.keys(data).map((keyName: string, index) => {
                         if (!userAccounts.includes(keyName))

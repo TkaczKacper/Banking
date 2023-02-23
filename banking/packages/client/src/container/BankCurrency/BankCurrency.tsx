@@ -59,12 +59,16 @@ const BankCurrency = () => {
          </div>
          <div className="cantor-container" id="cantor-container">
             <div className="cantor-exchange" id="cantor-exchange">
+               <button onClick={showMenu} className="show-menu-button">
+                  &#8617; Powrót
+               </button>
                <CurrencyExchange />
-               <button onClick={showMenu}>Powrót</button>
             </div>
             <div className="cantor-rate" id="cantor-rate">
+               <button onClick={showMenu} className="show-menu-button">
+                  &#8617; Powrót
+               </button>
                <ExchangeRate />
-               <button onClick={showMenu}>Powrót</button>
             </div>
          </div>
       </>

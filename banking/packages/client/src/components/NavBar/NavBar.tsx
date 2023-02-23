@@ -21,7 +21,7 @@ const NavBar = () => {
       <div className="navbar">
          <div className="navbar-left">
             {cookie.userId ? (
-               <Link to={"/"} className="navbar-logo">
+               <Link to={"/account"} className="navbar-logo">
                   <img
                      src="https://www.mbank.pl/images/logos/mbank-logo-ind.gif"
                      alt="mBank"

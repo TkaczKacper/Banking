@@ -7,6 +7,7 @@ const MoneyTransfer = () => {
    const [cookie] = useCookies(["userId"]);
    if (!cookie.userId) window.location.href = "/login";
    const [accounts, setAccounts] = useState([]);
+   const [size, setSize] = useState(1);
    const container = document.getElementById(
       "transfer-message"
    ) as HTMLDivElement;
@@ -90,7 +91,20 @@ const MoneyTransfer = () => {
                <div className="currency-container">
                   <label id="select-label">Waluta: </label>
                   <div className="select-container">
-                     <select name="sender" id="currency-input">
+                     <select
+                        name="sender"
+                        id="currency-input"
+                        size={size}
+                        onFocus={() => {
+                           setSize(4);
+                        }}
+                        onChange={() => {
+                           setSize(1);
+                        }}
+                        onBlur={() => {
+                           setSize(1);
+                        }}
+                     >
                         {accounts.map((item: any) => {
                            return (
                               <option
