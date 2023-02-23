@@ -35,6 +35,12 @@ tr:nth-child(even) {
    text-align: center;
    font-size: 27px;
 }
+.account-message {
+   font-size: 40px;
+   margin-top: 40px;
+   margin-left: auto;
+   margin-right: auto;
+}
 
 @media only screen and (min-width: 768px) {
    .account-table {

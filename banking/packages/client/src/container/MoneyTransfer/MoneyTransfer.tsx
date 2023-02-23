@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 
 const MoneyTransfer = () => {
    const [cookie] = useCookies(["userId"]);
+   if (!cookie.userId) window.location.href = "/login";
    const [accounts, setAccounts] = useState([]);
    const container = document.getElementById(
       "transfer-message"

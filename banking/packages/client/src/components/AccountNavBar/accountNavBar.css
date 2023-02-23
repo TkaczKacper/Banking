@@ -14,6 +14,9 @@
    flex-direction: column;
    align-items: center;
    font-size: 30px;
+   margin-left: -2%;
+   padding-left: 2%;
+   border-bottom: 1px solid black;
 }
 #nav-links-container {
    display: none;

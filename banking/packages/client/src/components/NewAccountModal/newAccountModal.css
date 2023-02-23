@@ -24,6 +24,7 @@
    background-color: none;
    font-size: 15px;
    border-radius: 100%;
+   cursor: pointer;
 }
 .currency-field {
    display: flex;

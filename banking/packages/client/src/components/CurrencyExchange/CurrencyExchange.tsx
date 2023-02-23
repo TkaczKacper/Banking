@@ -6,6 +6,7 @@ import { setTimeout } from "timers";
 
 const CurrencyExchange = () => {
    const [cookie] = useCookies(["userId"]);
+   if (!cookie.userId) window.location.href = "/login";
    const [accounts, setAccounts] = useState([]);
    const [message, setMessage] = useState("");
 

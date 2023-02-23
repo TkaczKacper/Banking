@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 
 const TransactionHistory = () => {
    const [cookie] = useCookies(["userId"]);
+   if (!cookie.userId) window.location.href = "/login";
    const [transactions, setTransactions] = useState([Object]);
 
    const fetchData = async () => {

@@ -6,7 +6,7 @@ import "./account.css";
 const Account = () => {
    const [cookie] = useCookies(["userId"]);
    const [accounts, setAccounts] = useState([]);
-
+   if (!cookie.userId) window.location.href = "/login";
    const fetchData = async () => {
       return await fetch(`http://192.168.1.100:5000/account/${cookie.userId}`, {
          method: "GET",
@@ -67,7 +67,7 @@ const Account = () => {
                </tbody>
             </table>
          ) : (
-            <div>accounts not found</div>
+            <div className="account-message">accounts not found</div>
          )}
       </>
    );
