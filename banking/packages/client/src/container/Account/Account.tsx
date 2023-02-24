@@ -38,12 +38,12 @@ const Account = () => {
          {accounts.length >= 1 ? (
             <table className="account-table">
                <thead>
-                  <tr>
-                     <th />
-                     <th className="th-item" id="th-number">
+                  <tr className="thead-row">
+                     <th className="thead-item" />
+                     <th className="thead-item" id="th-number">
                         numer konta
                      </th>
-                     <th className="th-item" id="th-balance">
+                     <th className="thead-item" id="th-balance">
                         stan konta
                      </th>
                   </tr>
@@ -52,13 +52,13 @@ const Account = () => {
                   {accounts.map((item: any, index) => {
                      return (
                         <tr key={item.accountnumber} className="tbody-row">
-                           <td className="tb-item" id="tb-id">
+                           <td className="tbody-item" id="account-tb-id">
                               {index + 1}.
                            </td>
-                           <td className="tb-item" id="tb-number">
+                           <td className="tbody-item" id="account-tb-number">
                               {item.accountnumber}
                            </td>
-                           <td className="tb-item" id="tb-balance">
+                           <td className="tbody-item" id="account-tb-balance">
                               {item.currency} {item.accountbalance}
                            </td>
                         </tr>
