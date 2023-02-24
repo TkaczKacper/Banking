@@ -29,8 +29,8 @@ export const GetExchangeRate = async (from: string, to: string) => {
 
 const ExchangeRate = () => {
    const avialableCurrencies = GetCurrencyData();
-   const [conversionResult, setConversionResult] = useState("");
-
+   const [size, setSize] = useState([1, 1]);
+   const [result, setResult] = useState("0");
    const onSubmit = async (e: React.SyntheticEvent) => {
       e.preventDefault();
       const target = e.target as typeof e.target & {
@@ -44,40 +44,103 @@ const ExchangeRate = () => {
 
       const ratio: number = await GetExchangeRate(from, to);
       const exchangeResult = amount * ratio;
-      setConversionResult(exchangeResult.toFixed(2));
+      setResult(exchangeResult.toFixed(2));
    };
    return (
-      <>
-         <form onSubmit={onSubmit} onChange={() => setConversionResult("")}>
-            <input
-               type="number"
-               min="0.01"
-               step="0.01"
-               name="amountInput"
-            ></input>
-            <select name="fromCurrency">
-               {Object.keys(avialableCurrencies).map((keyName: any, index) => {
-                  return (
-                     <option value={keyName} key={index}>
-                        {keyName}
-                     </option>
-                  );
-               })}
-            </select>
-            convert to:
-            <select name="toCurrency">
-               {Object.keys(avialableCurrencies).map((keyName: any, index) => {
-                  return (
-                     <option value={keyName} key={index}>
-                        {keyName}
-                     </option>
-                  );
-               })}
-            </select>
-            <button type="submit">konwertuj</button>
+      <div className="rate-container">
+         <form
+            className="cantor-form"
+            id="rate-form"
+            onSubmit={onSubmit}
+            onChange={() => setResult("0")}
+         >
+            <label className="form-label" id="rate-check-label">
+               Sprawdź kurs
+            </label>
+            <div className="form-currencies-container">
+               <select
+                  className="form-select"
+                  name="fromCurrency"
+                  size={size[0]}
+                  onFocus={() => {
+                     setSize([4, 1]);
+                  }}
+                  onChange={() => {
+                     setSize([1, 1]);
+                  }}
+                  onBlur={() => {
+                     setSize([1, 1]);
+                  }}
+               >
+                  {Object.keys(avialableCurrencies).map(
+                     (keyName: any, index) => {
+                        return (
+                           <option value={keyName} key={index}>
+                              {keyName}
+                           </option>
+                        );
+                     }
+                  )}
+               </select>
+               <div className="form-arrow" id="vertical-arrow">
+                  &dArr;
+               </div>
+               <div className="form-arrow" id="horizontal-arrow">
+                  &rArr;
+               </div>
+               <select
+                  className="form-select"
+                  name="toCurrency"
+                  size={size[1]}
+                  onFocus={() => {
+                     setSize([1, 4]);
+                  }}
+                  onChange={() => {
+                     setSize([1, 1]);
+                  }}
+                  onBlur={() => {
+                     setSize([1, 1]);
+                  }}
+               >
+                  {Object.keys(avialableCurrencies).map(
+                     (keyName: any, index) => {
+                        return (
+                           <option value={keyName} key={index}>
+                              {keyName}
+                           </option>
+                        );
+                     }
+                  )}
+               </select>
+            </div>
+            <div className="form-cantor-result">
+               <div id="form-result-1">
+                  <label className="form-label">Ilość</label>
+                  <input
+                     className="form-cantor-input"
+                     id="rate-amount-input"
+                     type="number"
+                     placeholder="0.00"
+                     min="0.01"
+                     step="0.01"
+                     name="amountInput"
+                  ></input>
+               </div>
+               <div id="form-result-2">
+                  <label className="form-label">Otrzymasz</label>
+                  <input
+                     className="form-cantor-input"
+                     id="rate-result-input"
+                     value={result}
+                     disabled
+                  ></input>
+               </div>
+            </div>
+            <button className="form-cantor-button" type="submit">
+               konwertuj
+            </button>
          </form>
-         <div id="result">{conversionResult}</div>
-      </>
+      </div>
    );
 };
 

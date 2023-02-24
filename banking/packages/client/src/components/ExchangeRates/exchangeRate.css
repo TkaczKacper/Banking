@@ -1,0 +1,78 @@
+.rate-container {
+   display: flex;
+   flex-direction: column;
+   width: 100%;
+   margin: auto;
+   max-width: 1100px;
+}
+#rate-check-label {
+   margin: 20px auto -5px auto;
+}
+.form-currencies-container {
+   display: flex;
+   flex-direction: column;
+   width: 100%;
+}
+.form-currencies-container > select {
+   margin: 25px auto 10px;
+}
+.form-arrow {
+   font-size: 40px;
+   margin: -15px auto -30px;
+}
+#horizontal-arrow {
+   display: none;
+}
+.form-cantor-result {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   margin: 10px 0;
+}
+#rate-amount-input {
+   margin: 0 auto;
+}
+#rate-result-input {
+   margin-top: 2px;
+}
+#form-result-1,
+#form-result-2 {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   width: 100%;
+}
+
+@media only screen and (min-width: 768px) {
+   #horizontal-arrow {
+      display: block;
+      margin: 20px -60px 0;
+   }
+   #vertical-arrow {
+      display: none;
+   }
+   .form-currencies-container {
+      flex-direction: row;
+      justify-content: space-between;
+      width: 80%;
+      margin: 10px auto;
+   }
+   .form-currencies-container > select {
+      width: 40%;
+   }
+}
+@media only screen and (min-width: 1024px) {
+   .form-cantor-result {
+      width: 80%;
+      margin: 10px auto;
+   }
+   #form-result-1,
+   #form-result-2 {
+      flex-direction: row;
+      margin: 10px auto;
+      width: 80%;
+   }
+   #rate-result-input {
+      margin: 0;
+   }
+}

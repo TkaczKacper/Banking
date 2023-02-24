@@ -81,7 +81,8 @@ const CurrencyExchange = () => {
    return (
       <div className="exchange-container">
          <form
-            className="exchange-form"
+            className="cantor-form"
+            id="exchange-form"
             onSubmit={submitHandler}
             onChange={() => setMessage("")}
          >
