@@ -66,7 +66,7 @@ accountRouter.get("/history/:username", async (req, res) => {
    try {
       const username = req.params.username;
       const transactions = await pool.query(
-         "SELECT * FROM transactions WHERE senderuser=$1 or receiveruser=$1",
+         "SELECT * FROM transactions WHERE senderuser=$1 or receiveruser=$1 ORDER BY transactiondate DESC",
          [username]
       );
       if (transactions.rowCount > 0) {
@@ -75,7 +75,7 @@ accountRouter.get("/history/:username", async (req, res) => {
             details: "transactions found",
          });
       } else {
-         res.json({ details: "not found" });
+         res.json({ transactions: transactions.rows, details: "not found" });
       }
    } catch (error) {
       console.log("error");

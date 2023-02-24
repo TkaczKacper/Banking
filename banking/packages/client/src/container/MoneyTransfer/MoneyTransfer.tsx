@@ -141,7 +141,7 @@ const MoneyTransfer = () => {
                </div>
                <div id="transfer-message"></div>
                <button type="submit" id="form-btn">
-                  submit
+                  przelej
                </button>
             </form>
          </div>

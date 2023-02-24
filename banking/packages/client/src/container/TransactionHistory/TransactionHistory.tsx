@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 const TransactionHistory = () => {
    const [cookie] = useCookies(["userId", "username"]);
    if (!cookie.userId) window.location.href = "/login";
-   const [transactions, setTransactions] = useState([Object]);
+   const [transactions, setTransactions] = useState([]);
 
    const fetchData = async () => {
       return await fetch(
@@ -22,10 +22,10 @@ const TransactionHistory = () => {
       fetchData();
    }, []);
    console.log(transactions);
-   if (transactions) {
-      return (
-         <>
-            <AccountNavBar />
+   return (
+      <>
+         <AccountNavBar />
+         {transactions.length >= 1 ? (
             <table className="transaction-history-table">
                <thead>
                   <tr className="thead-row">
@@ -107,18 +107,13 @@ const TransactionHistory = () => {
                   })}
                </tbody>
             </table>
-         </>
-      );
-   } else {
-      return (
-         <>
-            <AccountNavBar />
+         ) : (
             <div className="account-message">
                Nie masz jeszcze żadnej opreacji w historii.
             </div>
-         </>
-      );
-   }
+         )}
+      </>
+   );
 };
 
 export default TransactionHistory;

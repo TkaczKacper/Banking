@@ -1,6 +1,6 @@
 .individual-page-container {
    width: 100%;
-   min-width: 400px;
+   min-width: 320px;
    max-width: 1440px;
    display: flex;
    margin-left: auto;

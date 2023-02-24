@@ -1,7 +1,7 @@
 .form-container {
    display: flex;
    width: 100%;
-   min-width: 400px;
+   min-width: 320px;
    justify-content: center;
 }
 .login-form {
@@ -15,7 +15,7 @@
    margin-top: 30%;
 }
 .login-form > input {
-   width: 300px;
+   width: 290px;
    height: 50px;
    margin: 10px;
    text-align: center;

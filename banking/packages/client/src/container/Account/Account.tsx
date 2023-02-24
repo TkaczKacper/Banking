@@ -32,6 +32,8 @@ const Account = () => {
    useEffect(() => {
       fetchData();
    }, []);
+   console.log(accounts);
+
    return (
       <>
          <AccountNavBar />

@@ -128,7 +128,7 @@ const RegisterForm = () => {
                      >
                         <input
                            type="text"
-                           placeholder="username"
+                           placeholder="nazwa użytkownika"
                            name="username"
                            onChange={handleChange}
                            onBlur={handleBlur}
@@ -148,7 +148,7 @@ const RegisterForm = () => {
                         {errors.email && touched.email && errors.email}
                         <input
                            type="password"
-                           placeholder="password"
+                           placeholder="hasło"
                            name="password"
                            onChange={handleChange}
                            onBlur={handleBlur}
@@ -157,7 +157,7 @@ const RegisterForm = () => {
                         {errors.password && touched.password && errors.password}
                         <input
                            type="password"
-                           placeholder="confirm password"
+                           placeholder="powtórz hasło"
                            name="password_conf"
                            onChange={handleChange}
                            onBlur={handleBlur}
