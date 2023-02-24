@@ -67,7 +67,9 @@ const Account = () => {
                </tbody>
             </table>
          ) : (
-            <div className="account-message">accounts not found</div>
+            <div className="account-message">
+               Nie masz jeszcze żadnego konta.
+            </div>
          )}
       </>
    );

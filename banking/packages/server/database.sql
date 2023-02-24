@@ -16,19 +16,22 @@ CREATE TABLE account (
 
 CREATE TABLE transactions (
      id SERIAL NOT NULL UNIQUE,
-     senderUser int,
-     receiverUser int,
+     senderUser VARCHAR(20),
+     receiverUser VARCHAR(20),
      senderAccount int,
      receiverAccount int,
+     senderCurrency VARCHAR(3),
+     receiverCurrency VARCHAR(3),
      transactionAmount NUMERIC(10, 2) NOT NULL,
-     accountBalance NUMERIC(10, 2) NOT NULL,
+     senderAccountBalance NUMERIC(10, 2) NOT NULL,
+     receiverAccountBalance NUMERIC(10, 2) NOT NULL,
      PRIMARY KEY (id),
      CONSTRAINT fk_sender
           FOREIGN KEY (senderUser) 
-               REFERENCES users(id),
+               REFERENCES users(username),
      CONSTRAINT fk_receiver
           FOREIGN KEY (receiverUser) 
-               REFERENCES users(id),
+               REFERENCES users(username),
      CONSTRAINT fk_account_sender
           FOREIGN KEY (senderAccount) 
                REFERENCES account(accountNumber),

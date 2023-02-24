@@ -62,12 +62,12 @@ accountRouter.post("/new", async (req, res) => {
    }
 });
 
-accountRouter.get("/history/:id", async (req, res) => {
+accountRouter.get("/history/:username", async (req, res) => {
    try {
-      const userId = req.params.id;
+      const username = req.params.username;
       const transactions = await pool.query(
          "SELECT * FROM transactions WHERE senderuser=$1 or receiveruser=$1",
-         [userId]
+         [username]
       );
       if (transactions.rowCount > 0) {
          res.json({

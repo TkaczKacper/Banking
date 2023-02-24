@@ -23,7 +23,7 @@ const LoginForm = () => {
    return (
       <>
          {cookie.userId ? (
-            <Navigate to="/" />
+            <Navigate to="/account" />
          ) : (
             <div className="form-container">
                <Formik

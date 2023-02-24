@@ -35,8 +35,8 @@ moneyRouter.post("/transfer", async (req, res) => {
                Number(preBalance.rows[0].accountbalance) + transactionAmount;
          }
          if (senderBalance >= 0) {
-            const receiverId = await pool.query(
-               "SELECT ownerid FROM account WHERE accountnumber=$1",
+            const receiverUsername = await pool.query(
+               "SELECT username FROM account JOIN users ON account.ownerid=users.id WHERE accountnumber=$1",
                [receiver]
             );
             await pool.query(
@@ -48,12 +48,13 @@ moneyRouter.post("/transfer", async (req, res) => {
                [receiverBalance, req.body.receiverAccount]
             );
             await pool.query(
-               "INSERT INTO transactions(senderuser, receiveruser, senderaccount, receiveraccount, transactionamount, senderbalance, receiverbalance) VALUES ($1, $2, $3, $4, $5, $6, $7)",
+               "INSERT INTO transactions(senderuser, receiveruser, senderaccount, receiveraccount, sendercurrency, receivercurrency, transactionamount, senderaccountbalance, receiveraccountbalance) VALUES ($1, $2, $3, $4, $5, $5, $6, $7, $8)",
                [
-                  req.body.userId,
-                  receiverId.rows[0].ownerid,
+                  req.body.username,
+                  receiverUsername.rows[0].username,
                   sender,
                   receiver,
+                  req.body.currency,
                   transactionAmount,
                   senderBalance,
                   receiverBalance,
@@ -77,6 +78,7 @@ moneyRouter.post("/exchange", async (req, res) => {
       const currencyTo: string = req.body.currencyTo;
       const amount: number = Number(req.body.amount);
       const ownerid: number = req.body.userId;
+      const username: string = req.body.username;
       const userAccounts = await pool.query(
          "SELECT accountbalance, currency, accountnumber FROM account WHERE (currency=$1 OR currency=$2) AND ownerid=$3",
          [currencyFrom, currencyTo, ownerid]
@@ -122,12 +124,13 @@ moneyRouter.post("/exchange", async (req, res) => {
             [balanceToAfter, ownerid, currencyTo]
          );
          await pool.query(
-            "INSERT INTO transactions(senderuser, receiveruser, senderaccount, receiveraccount, transactionamount, senderbalance, receiverbalance) VALUES ($1, $2, $3, $4, $5, $6, $7)",
+            "INSERT INTO transactions(senderuser, receiveruser, senderaccount, receiveraccount, sendercurrency, receivercurrency, transactionamount, senderaccountbalance, receiveraccountbalance) VALUES ($1, $1, $2, $3, $4, $5, $6, $7, $8)",
             [
-               ownerid,
-               ownerid,
+               username,
                fromAccountnumber,
                toAccountnumber,
+               currencyFrom,
+               currencyTo,
                amount,
                balanceFromAfter,
                balanceToAfter,

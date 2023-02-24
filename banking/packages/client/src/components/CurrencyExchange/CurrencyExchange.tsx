@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { on } from "events";
 
 const CurrencyExchange = () => {
-   const [cookie] = useCookies(["userId"]);
+   const [cookie] = useCookies(["userId", "username"]);
    if (!cookie.userId) window.location.href = "/login";
    const [accounts, setAccounts] = useState([]);
    const [message, setMessage] = useState("");
@@ -53,6 +53,7 @@ const CurrencyExchange = () => {
             currencyTo: to,
             amount: amount,
             userId: cookie.userId,
+            username: cookie.username,
          };
          fetch("http://192.168.1.100:5000/money/exchange", {
             method: "POST",

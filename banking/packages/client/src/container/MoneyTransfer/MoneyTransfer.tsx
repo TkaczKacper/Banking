@@ -4,7 +4,7 @@ import { useCookies } from "react-cookie";
 import { useState, useEffect } from "react";
 
 const MoneyTransfer = () => {
-   const [cookie] = useCookies(["userId"]);
+   const [cookie] = useCookies(["userId", "username"]);
    if (!cookie.userId) window.location.href = "/login";
    const [accounts, setAccounts] = useState([]);
    const [size, setSize] = useState(1);
@@ -57,6 +57,7 @@ const MoneyTransfer = () => {
                   const receiverAccount = target.receiver.value;
                   const valuesToFetch = {
                      userId: cookie.userId,
+                     username: cookie.username,
                      senderAccount: senderAccount[0],
                      currency: senderAccount[1],
                      amount: amount,
