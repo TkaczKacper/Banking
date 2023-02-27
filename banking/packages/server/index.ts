@@ -10,7 +10,7 @@ require("dotenv").config();
 
 const server = require("http").createServer(app);
 
-const allowedOrigins = ["http://192.168.1.100:3000", "http://localhost:3000"];
+const allowedOrigins = ["http://localhost:3000"];
 const options: cors.CorsOptions = {
    origin: allowedOrigins,
    credentials: true,
