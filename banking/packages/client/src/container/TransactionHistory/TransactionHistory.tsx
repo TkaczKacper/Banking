@@ -1,12 +1,18 @@
 import "./transactionHistory.css";
-import { AccountNavBar } from "../../components";
-import { useCookies } from "react-cookie";
+import { AccountNavBar, Transactions } from "../../components";
 import { useState, useEffect } from "react";
+import { useCookies } from "react-cookie";
+import ReactPaginate from "react-paginate";
+import {
+  transactionsType,
+  transactionType,
+} from "../../components/Transactions/Transactions";
 
 const TransactionHistory = () => {
   const [cookie] = useCookies(["userId", "username"]);
   if (!cookie.userId) window.location.href = "/login";
-  const [transactions, setTransactions] = useState([]);
+  const [transactions, setTransactions] = useState<transactionsType[]>([]);
+  const itemsPerPage: number = 10;
 
   const fetchData = async () => {
     return await fetch(
@@ -14,6 +20,7 @@ const TransactionHistory = () => {
     )
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         return setTransactions(data.transactions);
       });
   };
@@ -21,97 +28,37 @@ const TransactionHistory = () => {
   useEffect(() => {
     fetchData();
   }, []);
-  console.log(transactions);
+
+  const [itemOffest, setItemOffest] = useState(0);
+  const endOffset = itemOffest + itemsPerPage;
+  const currentTransactions = transactions.slice(itemOffest, endOffset);
+  const pageCount = Math.ceil(transactions.length / itemsPerPage);
+
+  const handlePageChange = (event: any) => {
+    const newOffset = (event.selected * itemsPerPage) % transactions.length;
+    setItemOffest(newOffset);
+  };
   return (
     <>
       <AccountNavBar />
-      {transactions.length >= 1 ? (
-        <table className="transaction-history-table">
-          <thead>
-            <tr className="thead-row">
-              <th className="thead-item" id="history-th-type">
-                Typ
-              </th>
-              <th className="thead-item" id="history-th-value">
-                Wartość
-              </th>
-              <th className="thead-item" id="history-th-date">
-                Data
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {transactions.map((transaction: any, index) => {
-              const date = new Date(
-                transaction.transactiondate
-              ).toLocaleDateString();
-              const time = new Date(
-                transaction.transactiondate
-              ).toLocaleTimeString();
-              if (transaction.senderuser === transaction.receiveruser) {
-                return (
-                  <tr key={index} className="tbody-row">
-                    <td className="tb-item" id="history-tb-type">
-                      Przewalutowanie
-                    </td>
-                    <td className="tb-item" id="history-tb-value">
-                      {transaction.sendercurrency + " "}
-                      {transaction.transactionamount}
-                    </td>
-                    <td className="tb-item" id="history-tb-date">
-                      <div className="history-tb-date-value">
-                        <div id="tb-date-time">{time}</div>
-                        <div id="tb-date-date">{date}</div>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              }
-              if (transaction.senderuser === cookie.username) {
-                return (
-                  <tr key={index} className="tbody-row">
-                    <td className="tb-item" id="history-tb-type">
-                      Wychodzący
-                    </td>
-                    <td className="tb-item" id="history-tb-value">
-                      {transaction.sendercurrency + " "}
-                      {transaction.transactionamount}
-                    </td>
-                    <td className="tb-item" id="history-tb-date">
-                      <div className="history-tb-date-value">
-                        <div id="tb-date-time">{time}</div>
-                        <div id="tb-date-date">{date}</div>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              } else {
-                return (
-                  <tr key={index} className="tbody-row">
-                    <td className="tb-item" id="history-tb-type">
-                      Przychodzący
-                    </td>
-                    <td className="tb-item" id="history-tb-value">
-                      {transaction.receivercurrency + " "}
-                      {transaction.transactionamount}
-                    </td>
-                    <td className="tb-item" id="history-tb-date">
-                      <div className="history-tb-date-value">
-                        <div id="tb-date-time">{time}</div>
-                        <div id="tb-date-date">{date}</div>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              }
-            })}
-          </tbody>
-        </table>
-      ) : (
-        <div className="account-message">
-          Nie masz jeszcze żadnej opreacji w historii.
-        </div>
-      )}
+      <nav className="paginate">
+        <ReactPaginate
+          containerClassName="paginate-container"
+          pageLinkClassName="paginate-page-link"
+          activeLinkClassName="paginate-page-active"
+          previousLinkClassName="paginate-page-previous"
+          nextLinkClassName="paginate-page-next"
+          disabledLinkClassName="paginate-page-disabled"
+          breakLinkClassName="paginate-page-break"
+          nextLabel=">"
+          onPageChange={handlePageChange}
+          pageRangeDisplayed={1}
+          marginPagesDisplayed={1}
+          pageCount={pageCount}
+          previousLabel="<"
+        />
+      </nav>
+      <Transactions transactions={currentTransactions} />
     </>
   );
 };

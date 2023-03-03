@@ -1,57 +1,57 @@
 .footer {
-   width: 100%;
-   min-width: 320px;
-   max-width: 1440px;
-   margin-left: auto;
-   margin-right: auto;
-   margin-top: 100px;
-   padding-top: 20px;
-   padding-bottom: 20px;
-   background-color: rgb(223, 222, 222);
+  width: 100%;
+  min-width: 320px;
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 100px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: rgb(223, 222, 222);
 }
 
 .footer-container {
-   display: flex;
-   color: black;
-   justify-content: center;
-   width: 100%;
-   height: fit-content;
-   flex-wrap: wrap;
-   gap: 1em;
+  display: flex;
+  color: black;
+  justify-content: center;
+  width: 100%;
+  height: fit-content;
+  flex-wrap: wrap;
+  gap: 1em;
 }
 
 .footer-list-container {
-   display: flex;
-   flex-direction: column;
-   height: 100%;
-   width: 320px;
-   margin-bottom: 25px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 320px;
+  margin-bottom: 25px;
 }
 
 .list-header {
-   font-size: 40px;
-   margin-bottom: -20px;
-   margin-top: 10px;
-   font-weight: 500;
+  font-size: 40px;
+  margin-bottom: -20px;
+  margin-top: 10px;
+  font-weight: 500;
 }
 .list-header:before {
-   content: "";
-   position: absolute;
-   height: 1px;
-   width: 60px;
-   margin-top: 48px;
-   border-bottom: 2px solid rgb(174, 24, 24);
+  content: "";
+  position: absolute;
+  height: 1px;
+  width: 60px;
+  margin-top: 48px;
+  border-bottom: 2px solid rgb(174, 24, 24);
 }
 .list-item {
-   font-size: 25px;
+  font-size: 25px;
 }
 ul {
-   display: none;
-   margin-top: 25px;
+  display: none;
+  margin-top: 25px;
 }
 @media only screen and (min-width: 768px) {
-   ul {
-      display: block;
-      margin-top: 40px;
-   }
+  ul {
+    display: block;
+    margin-top: 40px;
+  }
 }

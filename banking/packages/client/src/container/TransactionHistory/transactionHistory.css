@@ -1,50 +1,35 @@
-.transaction-history-table {
-   width: 95%;
-   max-width: 1024px;
-   margin: auto;
-   border: 1px solid black;
-   border-collapse: collapse;
-   text-align: center;
+.paginate {
+  width: 100%;
+  display: flex;
 }
-#history-th-date,
-#history-tb-date {
-   display: none;
+.paginate-container {
+  display: flex;
+  justify-content: center;
+  margin: 10px auto;
+  padding: 0;
+  font-size: 40px;
 }
-#history-tb-type,
-#history-tb-value,
-#history-tb-date {
-   font-size: 23px;
-   padding: 10px;
+.paginate-container li:before {
+  content: "";
 }
-#history-tb-type {
-   width: 50%;
+.paginate-page-link,
+.paginate-page-previous,
+.paginate-page-next,
+.paginate-page-break {
+  border: 1px solid gray;
+  padding: 0 10px;
+  margin: 0;
+  cursor: pointer;
 }
-#history-tb-value {
-   width: 50%;
+.paginate-page-active {
+  background-color: lightblue;
+}
+.paginate-page-disabled {
+  background-color: rgb(233, 233, 233);
+  cursor: not-allowed;
 }
 @media only screen and (min-width: 768px) {
-   #history-th-date {
-      display: table-cell;
-   }
-   #history-tb-date {
-      display: table-cell;
-   }
-   #history-tb-type,
-   #history-tb-value {
-      width: 35%;
-   }
-   #tb-date-time {
-      display: none;
-   }
-}
-@media only screen and (min-width: 1024px) {
-   .history-tb-date-value {
-      display: flex;
-      justify-content: center;
-   }
-   #tb-date-time,
-   #tb-date-date {
-      display: block;
-      margin: 0 5px;
-   }
+  .paginate-container {
+    margin: 20px auto;
+  }
 }

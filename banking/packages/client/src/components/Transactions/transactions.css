@@ -1,0 +1,50 @@
+.transaction-history-table {
+  width: 95%;
+  max-width: 1024px;
+  margin: auto;
+  border: 1px solid black;
+  border-collapse: collapse;
+  text-align: center;
+}
+#history-th-date,
+#history-tb-date {
+  display: none;
+}
+#history-tb-type,
+#history-tb-value,
+#history-tb-date {
+  font-size: 23px;
+  padding: 10px;
+}
+#history-tb-type {
+  width: 50%;
+}
+#history-tb-value {
+  width: 50%;
+}
+@media only screen and (min-width: 768px) {
+  #history-th-date {
+    display: table-cell;
+  }
+  #history-tb-date {
+    display: table-cell;
+  }
+  #history-tb-type,
+  #history-tb-value {
+    width: 35%;
+  }
+  #tb-date-time {
+    display: none;
+  }
+}
+@media only screen and (min-width: 1024px) {
+  .history-tb-date-value {
+    display: flex;
+    justify-content: center;
+  }
+  #tb-date-time,
+  #tb-date-date {
+    display: block;
+    margin: 0 5px;
+  }
+}

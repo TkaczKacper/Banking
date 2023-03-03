@@ -5,3 +5,4 @@ export { default as Footer } from "./Footer/Footer";
 export { default as AccountNavBar } from "./AccountNavBar/AccountNavBar";
 export { default as ExchangeRate } from "./ExchangeRates/ExchangeRate";
 export { default as CurrencyExchange } from "./CurrencyExchange/CurrencyExchange";
+export { default as Transactions } from "./Transactions/Transactions";
