@@ -1,5 +1,7 @@
 import "./transactions.css";
 import { useCookies } from "react-cookie";
+import { useState } from "react";
+import { TransactionDetailsModal } from "..";
 
 export type transactionsType = { transactions: [transactionType] };
 export type transactionType = {
@@ -20,6 +22,10 @@ const Transactions = (currentTransactions: any) => {
   console.log(currentTransactions);
   const [cookie] = useCookies(["userId", "username"]);
   const transactions: [transactionType] = currentTransactions.transactions;
+  const [detailsTransaction, setDetailsTransaction] =
+    useState<transactionType>(Object);
+  const [detailsActive, setDetailsActive] = useState(false);
+
   return (
     <>
       {transactions.length >= 1 ? (
@@ -47,7 +53,14 @@ const Transactions = (currentTransactions: any) => {
               ).toLocaleTimeString();
               if (transaction.senderuser === transaction.receiveruser) {
                 return (
-                  <tr key={index} className="tbody-row">
+                  <tr
+                    key={index}
+                    className="tbody-row"
+                    onClick={() => {
+                      setDetailsActive(true);
+                      setDetailsTransaction(transaction);
+                    }}
+                  >
                     <td className="tb-item" id="history-tb-type">
                       Przewalutowanie
                     </td>
@@ -66,7 +79,14 @@ const Transactions = (currentTransactions: any) => {
               }
               if (transaction.senderuser === cookie.username) {
                 return (
-                  <tr key={index} className="tbody-row">
+                  <tr
+                    key={index}
+                    className="tbody-row"
+                    onClick={() => {
+                      setDetailsActive(true);
+                      setDetailsTransaction(transaction);
+                    }}
+                  >
                     <td className="tb-item" id="history-tb-type">
                       Wychodzący
                     </td>
@@ -84,7 +104,14 @@ const Transactions = (currentTransactions: any) => {
                 );
               } else {
                 return (
-                  <tr key={index} className="tbody-row">
+                  <tr
+                    key={index}
+                    className="tbody-row"
+                    onClick={() => {
+                      setDetailsActive(true);
+                      setDetailsTransaction(transaction);
+                    }}
+                  >
                     <td className="tb-item" id="history-tb-type">
                       Przychodzący
                     </td>
@@ -109,6 +136,11 @@ const Transactions = (currentTransactions: any) => {
           Nie masz jeszcze żadnej opreacji w historii.
         </div>
       )}{" "}
+      <TransactionDetailsModal
+        modalActive={detailsActive}
+        setModalActive={setDetailsActive}
+        transaction={detailsTransaction}
+      />
     </>
   );
 };

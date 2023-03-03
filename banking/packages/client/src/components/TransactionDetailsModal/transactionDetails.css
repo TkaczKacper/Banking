@@ -1,0 +1,51 @@
+.transaction-details-modal {
+  position: absolute;
+  top: 20%;
+  margin: auto;
+  bottom: 35%;
+  left: 5%;
+  right: 5%;
+  max-width: 700px;
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: rgb(231, 223, 223);
+  height: fit-content;
+  padding: 40px 25px;
+}
+.transaction-details-content {
+  width: 100%;
+  font-size: 34px;
+  margin: 0 0 10px 0;
+}
+.details-id,
+.details-type,
+.details-amount,
+.details-balance,
+.details-datetime,
+.details-user {
+  text-align: center;
+  margin: 5px 0 20px 0;
+}
+.details-type,
+.details-amount,
+.details-balance,
+.details-datetime,
+.details-user {
+  display: flex;
+  flex-direction: column;
+}
+@media only screen and (min-width: 768px) {
+  .transaction-details-modal {
+    left: 10%;
+    right: 10%;
+  }
+}
+@media only screen and (min-width: 1024px) {
+  .transaction-details-modal {
+    left: 20%;
+    right: 20%;
+  }
+  .transaction-details-content {
+    font-size: 40px;
+  }
+}

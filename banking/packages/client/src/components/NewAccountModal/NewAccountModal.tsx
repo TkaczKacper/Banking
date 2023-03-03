@@ -1,7 +1,7 @@
 import "./newAccountModal.css";
 import Modal from "react-modal";
 import { useCookies } from "react-cookie";
-import { useState, useEffect, FocusEvent } from "react";
+import { useState, useEffect } from "react";
 import { GetCurrencyData } from "../ExchangeRates/ExchangeRate";
 
 type props = {

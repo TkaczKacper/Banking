@@ -3,16 +3,12 @@ import { AccountNavBar, Transactions } from "../../components";
 import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import ReactPaginate from "react-paginate";
-import {
-  transactionsType,
-  transactionType,
-} from "../../components/Transactions/Transactions";
+import { transactionsType } from "../../components/Transactions/Transactions";
 
 const TransactionHistory = () => {
   const [cookie] = useCookies(["userId", "username"]);
   if (!cookie.userId) window.location.href = "/login";
   const [transactions, setTransactions] = useState<transactionsType[]>([]);
-  const itemsPerPage: number = 10;
 
   const fetchData = async () => {
     return await fetch(
@@ -29,12 +25,14 @@ const TransactionHistory = () => {
     fetchData();
   }, []);
 
+  const itemsPerPage: number = 10;
   const [itemOffest, setItemOffest] = useState(0);
   const endOffset = itemOffest + itemsPerPage;
   const currentTransactions = transactions.slice(itemOffest, endOffset);
   const pageCount = Math.ceil(transactions.length / itemsPerPage);
 
-  const handlePageChange = (event: any) => {
+  const handlePageChange = (event: { selected: number }) => {
+    console.log(event);
     const newOffset = (event.selected * itemsPerPage) % transactions.length;
     setItemOffest(newOffset);
   };
