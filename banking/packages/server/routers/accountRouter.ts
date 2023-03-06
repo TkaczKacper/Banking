@@ -82,4 +82,28 @@ accountRouter.get("/history/:username", async (req, res) => {
    }
 });
 
+accountRouter.post("/delete", async (req, res) => {
+   try {
+      const accountNumber = req.body.accountnumber;
+      const accountBalance = await pool.query(
+         "SELECT accountbalance FROM account WHERE accountnumber=$1",
+         [accountNumber]
+      );
+      if (accountBalance.rows[0].accountbalance == 0.0) {
+         pool.query("DELETE FROM account WHERE accountnumber=$1", [
+            accountNumber,
+         ]);
+         res.json({ details: "Rachunek został zamknięty!", status: "success" });
+      } else {
+         res.json({
+            details:
+               "Upewnij się, że nie masz środków na rachunku, który chcesz zamknąć.",
+            status: "error",
+         });
+      }
+   } catch (error) {
+      console.log("error");
+   }
+});
+
 export default accountRouter;

@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import { AccountNavBar } from "../../components";
+import { AccountNavBar, CloseAccountModal } from "../../components";
 import "./account.css";
 
 const Account = () => {
   const [cookie] = useCookies(["userId"]);
   const [accounts, setAccounts] = useState([]);
+  const [closeAccountModalActive, setCloseAccountModalActive] = useState(false);
+  const [accountToClose, setAccountToClose] = useState(0);
+
   if (!cookie.userId) window.location.href = "/login";
   const fetchData = async () => {
     return await fetch(`http://localhost:5000/account/${cookie.userId}`, {
@@ -53,7 +56,16 @@ const Account = () => {
           <tbody className="account-table-body">
             {accounts.map((item: any, index) => {
               return (
-                <tr key={item.accountnumber} className="tbody-row">
+                <tr
+                  key={item.accountnumber}
+                  className="tbody-row"
+                  onClick={() => {
+                    if (item.accountbalance == 0.0) {
+                      setAccountToClose(item.accountnumber);
+                      setCloseAccountModalActive(true);
+                    }
+                  }}
+                >
                   <td className="tbody-item" id="account-tb-id">
                     {index + 1}.
                   </td>
@@ -71,6 +83,11 @@ const Account = () => {
       ) : (
         <div className="account-message">Nie masz jeszcze żadnego konta.</div>
       )}
+      <CloseAccountModal
+        closeAccountModalActive={closeAccountModalActive}
+        setCloseAccountModalActive={setCloseAccountModalActive}
+        accountNumber={accountToClose}
+      />
     </>
   );
 };
